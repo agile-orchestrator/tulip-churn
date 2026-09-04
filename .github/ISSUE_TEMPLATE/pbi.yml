@@ -1,0 +1,39 @@
+name: Product Backlog Item
+description: A small piece of work that fits in one sprint.
+title: ""
+labels: [pbi]
+type: Task
+body:
+  - type: input
+    id: parent
+    attributes:
+      label: Parent feature
+      placeholder: "#3"
+  - type: textarea
+    id: story
+    attributes:
+      label: User story
+      value: |
+        As a <role>
+        I want <capability>
+        So that <benefit>
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Given / When / Then, one per line. Must be testable.
+      value: |
+        - [ ] Given ... when ... then ...
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Technical notes
+  - type: dropdown
+    id: estimate
+    attributes:
+      label: Estimate (story points)
+      options: ["1", "2", "3", "5", "8", "13"]

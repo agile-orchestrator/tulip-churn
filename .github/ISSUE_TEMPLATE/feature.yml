@@ -1,0 +1,23 @@
+name: Feature
+description: A shippable capability that belongs to an epic.
+title: "[Feature] "
+labels: [feature]
+type: Feature
+body:
+  - type: input
+    id: epic
+    attributes:
+      label: Parent epic
+      placeholder: "#1"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria (high level)
