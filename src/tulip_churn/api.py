@@ -1,5 +1,6 @@
 """Scoring API: POST /score returns the churn probability for one customer."""
 
+import logging
 from functools import lru_cache
 from typing import Literal
 
@@ -12,6 +13,8 @@ from tulip_churn.features import FEATURES, add_features
 
 MODEL_PATH = "models/model.joblib"
 THRESHOLD = 0.5
+
+logger = logging.getLogger("tulip_churn.audit")
 
 app = FastAPI(title="Tulip Bank churn scoring", version="0.1.0")
 
@@ -48,4 +51,6 @@ def health() -> dict[str, str]:
 def score(customer: Customer) -> Score:
     df = add_features(pd.DataFrame([customer.model_dump()]))
     proba = float(get_model().predict_proba(df[FEATURES])[0, 1])
-    return Score(churn_probability=round(proba, 4), at_risk=proba >= THRESHOLD)
+    result = Score(churn_probability=round(proba, 4), at_risk=proba >= THRESHOLD)
+    logger.info("score input=%s result=%s", customer.model_dump(), result.model_dump())
+    return result
