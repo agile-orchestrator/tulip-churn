@@ -8,8 +8,8 @@ model and a FastAPI scoring service.
 
 | What | Where |
 |---|---|
-| Code | this repo (`__ORG__/tulip-churn`) |
-| Backlog, sprints, board | GitHub Project **Tulip Churn Board** (org `__ORG__`, project #__PROJECT__) |
+| Code | this repo (`agile-orchestrator/tulip-churn`) |
+| Backlog, sprints, board | GitHub Project **Tulip Churn Board** (org `agile-orchestrator`, project #1) |
 | Documentation (overview, data dictionary, DoR, DoD, ADRs, model card, meeting notes) | Notion workspace **Tulip Bank**, page "Tulip Bank — Churn Early-Warning" (via the `notion` MCP server) |
 
 Read the Notion **Definition of Ready** before creating or refining backlog items and the
@@ -58,14 +58,14 @@ move the item to **In review**.
 ```bash
 gh issue list --label pbi --state open
 gh issue create --title "..." --label pbi --body-file body.md
-gh project item-list __PROJECT__ --owner __ORG__ --format json
-gh project item-add __PROJECT__ --owner __ORG__ --url <issue-url>
-gh project field-list __PROJECT__ --owner __ORG__ --format json   # field + option ids
+gh project item-list 1 --owner agile-orchestrator --format json
+gh project item-add 1 --owner agile-orchestrator --url <issue-url>
+gh project field-list 1 --owner agile-orchestrator --format json   # field + option ids
 gh project item-edit --project-id <id> --id <item-id> --field-id <status-field> \
   --single-select-option-id <option-id>
 # sub-issues
-gh api repos/__ORG__/tulip-churn/issues/<parent>/sub_issues -X POST \
-  -F sub_issue_id=$(gh api repos/__ORG__/tulip-churn/issues/<child> --jq .id)
+gh api repos/agile-orchestrator/tulip-churn/issues/<parent>/sub_issues -X POST \
+  -F sub_issue_id=$(gh api repos/agile-orchestrator/tulip-churn/issues/<child> --jq .id)
 ```
 
 Custom slash commands for common scrum tasks are in `.claude/commands/`.
