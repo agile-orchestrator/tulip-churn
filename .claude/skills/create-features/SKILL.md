@@ -70,7 +70,7 @@ gh project item-add 1 --owner agile-orchestrator --url $URL --format json --jq .
 ```
 
 Labels: always `feature`; add an area label if one fits (`api`, `model`, `data`, `docs`,
-`ci`). Set Status = **Backlog** and Priority via `gh project field-list` and `gh project
+`ci`). Set Status = **Backlog** (the In refinement entry bar in `CLAUDE.md` is for PBIs) and Priority via `gh project field-list` and `gh project
 item-edit`. No Story Points on features. If a `gh project` command fails, do not retry in
 a loop: say what is missing and that the issue exists without board fields.
 

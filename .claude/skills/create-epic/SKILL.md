@@ -85,7 +85,7 @@ gh api repos/agile-orchestrator/tulip-churn/issues/$N -X PATCH -f type=Epic
 gh project item-add 1 --owner agile-orchestrator --url $URL --format json --jq .id
 ```
 
-Set Status = **Backlog** and Priority with `gh project field-list 1 --owner
+Set Status = **Backlog** (the In refinement entry bar in `CLAUDE.md` is for PBIs) and Priority with `gh project field-list 1 --owner
 agile-orchestrator --format json` and `gh project item-edit`. Epics and features get no
 Story Points. If a `gh project` command fails, do not retry in a loop: say what is missing
 and that the issue exists without board fields.
