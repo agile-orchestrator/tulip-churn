@@ -76,6 +76,14 @@ gh pr create --base main --head $BR --title "<title>" --body-file <file>
 # or, if a PR is already open: gh pr edit <pr> --body-file <file>
 ```
 
+Request a reviewer, picked as in the `log-finding` skill (a collaborator other than the
+author), and say in the PR why that person was chosen. `gh pr edit --add-reviewer` fails on
+this repo, so use the API:
+
+```bash
+gh api repos/agile-orchestrator/tulip-churn/pulls/<pr>/requested_reviewers -X POST -f 'reviewers[]=<login>'
+```
+
 ## 4. Move the item to In review
 
 Look the ids up by name, never hard-code them:

@@ -62,15 +62,32 @@ are missing and that it needs more work first. With their OK, park it in **Backl
   + technical notes + estimate. Use the templates in `.github/ISSUE_TEMPLATE/`.
 - Vague items ("Improve model") get the `needs-refinement` label and stay in Backlog.
 
+**Found something off? Log it.** Whenever you notice a problem outside the scope of your
+current task (a bug, hard-coded value, stale output, leaking feature, flaky check, deprecation,
+docs that no longer match the code), put it on the board with the `log-finding` skill. Don't
+ask first and don't fix it in the current branch. Findings always go to **Backlog** with
+`needs-refinement`, never straight to In refinement. This overrides the "with their OK" above.
+If the fix is only a few lines (no open decisions, no retrain), don't wait: fix it right away
+on its own branch and open a PR with a reviewer, as described in the skill. Wrong board state
+goes in your report, not in a new issue. Wrong instructions in this repo get fixed on a
+`chore/` branch. Report P0 findings right away and everything else at the end of your reply.
+
 **Branches:** `feat/<issue>-short-slug`, `fix/<issue>-short-slug`, `chore/<slug>`.
+Branch from an up-to-date `main` (`git fetch origin` first, branch from `origin/main`), never
+from another feature or chore branch.
 **Commits:** Conventional Commits (`feat:`, `fix:`, `test:`, `docs:`, `chore:`, `refactor:`).
 **PRs:** fill `.github/pull_request_template.md`, reference the issue with `Closes #n`,
-move the item to **In review**. `/review-publish-pr` reviews the branch and does all three.
+request a reviewer (a collaborator other than the author, picked as in the `log-finding`
+skill), and move the item to **In review**. `/review-publish-pr` reviews the branch and does
+all of this.
 
 ## Board operations with the gh CLI
 
 ```bash
 gh issue list --label pbi --state open
+# `gh issue view` and `gh pr edit` fail here (Projects classic deprecation error); use the API:
+gh api repos/agile-orchestrator/tulip-churn/issues/<n> --jq '.title, .body'
+gh api repos/agile-orchestrator/tulip-churn/pulls/<pr>/requested_reviewers -X POST -f 'reviewers[]=<login>'
 gh issue create --title "..." --label pbi --body-file body.md
 gh project item-list 1 --owner agile-orchestrator --format json
 gh project item-add 1 --owner agile-orchestrator --url <issue-url>
