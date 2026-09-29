@@ -2,8 +2,10 @@
 
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, roc_auc_score
 
+THRESHOLD = 0.5  # churn probability at which a customer counts as at risk
 
-def evaluate(y_true, y_proba, threshold: float = 0.5) -> dict[str, float]:
+
+def evaluate(y_true, y_proba, threshold: float = THRESHOLD) -> dict[str, float]:
     y_pred = (y_proba >= threshold).astype(int)
     return {
         "roc_auc": roc_auc_score(y_true, y_proba),

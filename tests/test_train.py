@@ -4,6 +4,7 @@ import math
 import joblib
 import pytest
 
+from tulip_churn import api
 from tulip_churn.data import load_data
 from tulip_churn.features import FEATURES, add_features
 from tulip_churn.train import GROUPS, TrainConfig, fit_and_evaluate, main, train
@@ -38,6 +39,7 @@ def test_metrics_json_has_what_the_model_card_needs(trained):
         "seed": 42, "test_size": 0.2, "n_estimators": 10, "max_depth": 2, "learning_rate": 0.1
     }
     assert metrics["features"] == FEATURES
+    assert metrics["threshold"] == api.THRESHOLD
     assert metrics["data"]["train_rows"] + metrics["data"]["test_rows"] == metrics["data"]["rows"]
     assert set(metrics["test"]) >= {"roc_auc", "precision", "recall", "f1"}
     assert set(metrics["by_group"]) == set(GROUPS)

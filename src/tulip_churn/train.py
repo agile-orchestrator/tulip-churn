@@ -21,12 +21,11 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 from tulip_churn import __version__
 from tulip_churn.data import TARGET, data_path, load_data, split
-from tulip_churn.evaluate import evaluate
+from tulip_churn.evaluate import THRESHOLD, evaluate
 from tulip_churn.features import CATEGORICAL, FEATURES, NUMERIC, add_features
 
 REPO = Path(__file__).resolve().parents[2]
 MODELS_DIR = REPO / "models"
-THRESHOLD = 0.5
 GROUPS = ["Gender", "AgeBand", "Geography"]
 
 
