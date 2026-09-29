@@ -29,7 +29,7 @@ dataset. To use the real one instead (needs `~/.kaggle/kaggle.json`):
 uv run --with kaggle kaggle datasets download -d shrutimechlearn/churn-modelling -p data/raw --unzip
 ```
 
-Column meanings are in the **Data dictionary** page in Notion.
+Column meanings are in the [Data Dictionary](https://github.com/agile-orchestrator/tulip-churn/wiki/Data-Dictionary) page on the wiki.
 
 ## Layout
 
@@ -46,5 +46,5 @@ tests/
 
 ## Ways of working
 
-Backlog lives on the GitHub Project board, documentation (DoR, DoD, ADRs, meeting notes) in
-Notion. See `CLAUDE.md` for conventions.
+Backlog lives on the GitHub Project board, documentation (DoR, DoD, ADRs, meeting notes) on the
+[GitHub Wiki](https://github.com/agile-orchestrator/tulip-churn/wiki). See `CLAUDE.md` for conventions.

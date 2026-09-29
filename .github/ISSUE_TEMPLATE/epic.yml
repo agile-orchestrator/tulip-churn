@@ -25,7 +25,7 @@ body:
     attributes:
       label: In scope / out of scope
   - type: input
-    id: notion
+    id: wiki
     attributes:
-      label: Notion link
-      description: Link to the source meeting notes or spec.
+      label: Wiki link
+      description: Link to the source meeting notes or spec on the wiki.

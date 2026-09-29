@@ -10,9 +10,9 @@ model and a FastAPI scoring service.
 |---|---|
 | Code | this repo (`agile-orchestrator/tulip-churn`) |
 | Backlog, sprints, board | GitHub Project **Tulip Churn Board** (org `agile-orchestrator`, project #1) |
-| Documentation (overview, data dictionary, DoR, DoD, ADRs, model card, meeting notes) | Notion workspace **Tulip Bank**, page "Tulip Bank — Churn Early-Warning" (via the `notion` MCP server) |
+| Documentation (overview, data dictionary, DoR, DoD, ADRs, model card, meeting notes) | [GitHub Wiki](https://github.com/agile-orchestrator/tulip-churn/wiki) |
 
-Read the Notion **Definition of Ready** before creating or refining backlog items and the
+Read the wiki **Definition of Ready** before creating or refining backlog items and the
 **Definition of Done** before opening or reviewing a PR.
 
 ## Commands

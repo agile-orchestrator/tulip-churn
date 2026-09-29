@@ -11,4 +11,4 @@ Closes #
 - [ ] Acceptance criteria of the linked issue are met
 - [ ] Tests added or updated, `uv run pytest` green
 - [ ] `uv run ruff check .` clean
-- [ ] Docs / Notion updated if behaviour changed
+- [ ] Docs / wiki updated if behaviour changed
