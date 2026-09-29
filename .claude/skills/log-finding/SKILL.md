@@ -85,22 +85,31 @@ Verify with step 5 of `create-pbi`.
 
 Fix it yourself, without asking, when **all** of these hold:
 
-- A few lines of code, config or docs change: roughly 20 lines or fewer, not counting tests and
-  generated files such as `uv.lock`
+- At most 20 changed lines (added plus removed, from `git diff --numstat`), not counting tests
+  and generated files such as `uv.lock`
 - The fix follows from the finding: no blocking open questions, no PO or design decision
 - No retrain, and no change to model outputs or metrics
 - No dependency changes at all (adding, removing or swapping packages, dev ones included): new
   third-party code needs a human decision, and Claude Code's permission check blocks it anyway
+- None of these are touched: `.github/workflows/`, secrets or credentials (`.env`, tokens,
+  keys), deploy or infra config, `.mcp.json`, `.claude/settings*.json`
 
 Otherwise leave the item in Backlog for the team.
 
+Not asking first is deliberate (see the review thread on #39): the PR review is the check.
+This fast path also skips refinement and the Definition of Ready, which is fine for a fix this
+small. Anything bigger goes through refinement. Never push to `main`, merge, approve or close
+the item yourself.
+
 1. Park the current work (commit it, or `git stash`), then branch from an up-to-date `main`:
-   `git fetch origin && git switch -c fix/<n>-<slug> origin/main` (`chore/<n>-<slug>` for a
-   non-bug task).
+   `git fetch origin && git switch -c fix/<n>-<slug> --no-track origin/main`
+   (`chore/<n>-<slug>` for a non-bug task). `--no-track` keeps a later push from targeting
+   `main`.
 2. Move the item to **In progress**. Remove `needs-refinement`, since the fix is now done.
 3. Write a failing test first when behaviour changes, then the fix. Run `uv run pytest` and
    `uv run ruff check .`.
-4. Commit with Conventional Commits (`fix:`, `chore:`, ...), then push.
+4. Commit with Conventional Commits (`fix:`, `chore:`, ...), then push:
+   `git push -u origin HEAD`.
 5. Open a PR using `.github/pull_request_template.md`, with `Closes #<n>` and a short **How it
    was found** line. If an acceptance criterion can only be met after another open PR merges,
    use `Part of #<n>` instead and say what is left.
@@ -111,21 +120,28 @@ Otherwise leave the item in Backlog for the team.
    call. Mention in the report that it has no Sprint.
 8. Switch back to the original branch (and `git stash pop`) and carry on.
 
-If the fix turns out bigger than expected, stop. Leave the item in Backlog with what you learned
-as a comment, and delete the branch.
+If the fix turns out bigger than expected, stop before pushing. Leave the item in Backlog with
+what you learned as a comment, switch back to the original branch and delete the local branch
+(`git branch -D fix/<n>-<slug>`). Nothing is on the remote yet.
 
 **Picking a reviewer.** Only current repo collaborators, never the PR author:
 
 ```bash
 ME=$(gh api user --jq .login)
-gh api repos/agile-orchestrator/tulip-churn/collaborators --jq '.[].login' | grep -vx "$ME"
+gh api repos/agile-orchestrator/tulip-churn/collaborators --paginate --jq '.[].login' | grep -vx "$ME"
 ```
 
-1. CODEOWNERS for the touched files, if the repo has one.
-2. A collaborator who committed to or reviewed the touched files, has an open PR touching them,
-   or is assigned to the item, its parent or a directly related item
-   (`git log --format='%an %ae' -- <files>`; map names to logins through
-   `gh pr list --state all --json author`).
+1. `.github/CODEOWNERS` for the touched files, if the file exists (there is none today).
+2. A collaborator who committed to the touched files, has an open PR touching them, or is
+   assigned to the item, its parent or a directly related item. The commits API gives GitHub
+   logins directly (`git log` only has names and emails):
+
+   ```bash
+   gh api "repos/agile-orchestrator/tulip-churn/commits?path=<file>&per_page=100" \
+     --jq '.[].author.login // empty' | sort | uniq -c | sort -rn
+   gh pr list --state open --json author,files \
+     --jq '.[] | select(any(.files[]; .path == "<file>")) | .author.login'
+   ```
 3. Otherwise, the collaborator with the fewest open review requests, so reviews spread over the
    team (`gh pr list --state open --json reviewRequests`). Break ties alphabetically.
 
