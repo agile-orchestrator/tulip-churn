@@ -11,7 +11,7 @@ Transform Notion documentation into GitHub wiki pages while maintaining readabil
 **For a complete migration with script:**
 ```bash
 # Use the migration script
-./docs/skills/migrate-notion-to-wiki-script.sh
+./.claude/skills/migrate-notion-to-wiki/migrate-notion-to-wiki-script.sh
 ```
 
 **For manual migration, follow the detailed instructions below.**

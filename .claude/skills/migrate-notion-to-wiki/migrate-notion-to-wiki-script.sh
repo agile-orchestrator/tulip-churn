@@ -1,6 +1,6 @@
 #!/bin/bash
 # Migration script for Notion → GitHub Wiki
-# Based on docs/skills/migrate-notion-to-github-wiki.md
+# Based on .claude/skills/migrate-notion-to-wiki/SKILL.md
 
 set -e  # Exit on error
 
