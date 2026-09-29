@@ -82,8 +82,9 @@ skill), and move the item to **In review**.
 
 ```bash
 gh issue list --label pbi --state open
-# `gh issue view` fails here (Projects classic deprecation error); read issues via the API:
+# `gh issue view` and `gh pr edit` fail here (Projects classic deprecation error); use the API:
 gh api repos/agile-orchestrator/tulip-churn/issues/<n> --jq '.title, .body'
+gh api repos/agile-orchestrator/tulip-churn/pulls/<pr>/requested_reviewers -X POST -f 'reviewers[]=<login>'
 gh issue create --title "..." --label pbi --body-file body.md
 gh project item-list 1 --owner agile-orchestrator --format json
 gh project item-add 1 --owner agile-orchestrator --url <issue-url>

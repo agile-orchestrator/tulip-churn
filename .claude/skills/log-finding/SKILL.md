@@ -89,7 +89,8 @@ Fix it yourself, without asking, when **all** of these hold:
   generated files such as `uv.lock`
 - The fix follows from the finding: no blocking open questions, no PO or design decision
 - No retrain, and no change to model outputs or metrics
-- No new runtime dependency (swapping a dev dependency is fine)
+- No dependency changes at all (adding, removing or swapping packages, dev ones included): new
+  third-party code needs a human decision, and Claude Code's permission check blocks it anyway
 
 Otherwise leave the item in Backlog for the team.
 
@@ -103,8 +104,9 @@ Otherwise leave the item in Backlog for the team.
 5. Open a PR using `.github/pull_request_template.md`, with `Closes #<n>` and a short **How it
    was found** line. If an acceptance criterion can only be met after another open PR merges,
    use `Part of #<n>` instead and say what is left.
-6. Request a reviewer (below) with `gh pr edit <pr> --add-reviewer <login>`, and say in the PR
-   why that person was chosen.
+6. Request a reviewer (below), and say in the PR why that person was chosen. `gh pr edit
+   --add-reviewer` fails on this repo (Projects classic deprecation), so use the API:
+   `gh api repos/agile-orchestrator/tulip-churn/pulls/<pr>/requested_reviewers -X POST -f 'reviewers[]=<login>'`
 7. Move the item to **In review**. Do not set a Sprint: pulling it into a sprint is the PO's
    call. Mention in the report that it has no Sprint.
 8. Switch back to the original branch (and `git stash pop`) and carry on.
@@ -120,9 +122,10 @@ gh api repos/agile-orchestrator/tulip-churn/collaborators --jq '.[].login' | gre
 ```
 
 1. CODEOWNERS for the touched files, if the repo has one.
-2. A collaborator who committed to or reviewed the touched files, or is assigned to the item,
-   its parent or a directly related item (`git log --format='%an %ae' -- <files>`; map names to
-   logins through `gh pr list --state all --json author`).
+2. A collaborator who committed to or reviewed the touched files, has an open PR touching them,
+   or is assigned to the item, its parent or a directly related item
+   (`git log --format='%an %ae' -- <files>`; map names to logins through
+   `gh pr list --state all --json author`).
 3. Otherwise, the collaborator with the fewest open review requests, so reviews spread over the
    team (`gh pr list --state open --json reviewRequests`). Break ties alphabetically.
 
