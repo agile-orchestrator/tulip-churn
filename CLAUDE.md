@@ -40,6 +40,7 @@ First time, or something looks broken: run `/setup` (`.claude/skills/setup/SKILL
 ```bash
 uv sync
 uv run python scripts/generate_data.py          # data/raw/Churn_Modelling.csv
+uv run python -m tulip_churn.train             # models/model.joblib + models/metrics.json
 uv run jupyter nbconvert --to notebook --execute --inplace notebooks/01_exploration.ipynb
 uv run uvicorn tulip_churn.api:app --reload
 uv run pytest

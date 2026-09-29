@@ -13,8 +13,8 @@ still missing. You can run it again at any time.
 ```bash
 uv sync                                   # install deps (Python 3.11+)
 uv run python scripts/generate_data.py    # writes data/raw/Churn_Modelling.csv
-uv run jupyter nbconvert --to notebook --execute --inplace notebooks/01_exploration.ipynb
-                                          # trains and saves models/model.joblib
+uv run python -m tulip_churn.train        # saves models/model.joblib + models/metrics.json
+                                          # --help for seed and hyperparameters
 uv run uvicorn tulip_churn.api:app --reload
 curl -X POST localhost:8000/score -H 'content-type: application/json' -d '{
   "CreditScore": 619, "Geography": "France", "Gender": "Female", "Age": 42, "Tenure": 2,
@@ -45,7 +45,7 @@ src/tulip_churn/
   train.py      training entrypoint
   evaluate.py   metrics
   api.py        FastAPI scoring service (POST /score)
-notebooks/      exploration + training
+notebooks/      exploration (calls tulip_churn.train)
 tests/
 ```
 
