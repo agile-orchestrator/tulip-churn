@@ -8,6 +8,21 @@ Help the team decide what goes into the sprint. The user (usually the Product Ow
 you gather, check, recommend and apply. Never create, edit, close or move an issue without the
 user's OK for that change.
 
+## 0. Which sprint are we planning?
+
+Settle this first and state it in the first line of your first message, e.g.
+"We are planning **Sprint 3** (Sep 28 – Oct 11), already running since Sep 28: 9 working
+days left."
+
+- Take `$ARGUMENTS` if given. Otherwise read the iterations (query in step 1) and today's date.
+- If the current sprint has **no committed items yet** (for example a new team that arrives
+  mid-sprint), plan the **current** sprint for the days that are left. Otherwise plan the
+  **next** one.
+- If it is ambiguous, ask the user before going further.
+- "Previous sprint" below means the sprint before the one being planned.
+
+Use the same sprint name in every message, board change and the Notion page.
+
 ## 1. Gather the facts (before presenting anything)
 
 Board, sprints and team:
@@ -42,8 +57,8 @@ Then **read the content, not just the fields.** Board fields alone miss deadline
 
 ## 2. Present
 
-Start with the sprint dates (and whether planning is late), the team, and the deadline with
-how many sprints remain before it.
+Start with the sprint being planned (step 0), its dates and days left, the team, and the
+deadline with how many sprints remain before it.
 
 Do **not** show Backlog or In refinement items: only Ready items can enter a sprint.
 
@@ -102,12 +117,28 @@ SPR=$(fid Sprint)   # iteration id comes from the graphql query in step 1
   "Add iteration". Don't use `updateProjectV2Field` for this: it replaces the whole iteration
   list without ids, which can unassign every item from past and current sprints.
 
+- **Sprint board:** if the project has no view for the planned sprint yet, create a board view
+  named after it (columns follow Status) and give the user its link,
+  `https://github.com/orgs/agile-orchestrator/projects/1/views/<number>`:
+
+  ```bash
+  V=$(gh api graphql -f query="mutation{createProjectV2View(input:{projectId:\"$P\",
+    name:\"Sprint N\",layout:BOARD_LAYOUT}){projectV2View{id number}}}" \
+    --jq .data.createProjectV2View.projectV2View)
+  gh api graphql -f query="mutation{updateProjectV2View(input:{viewId:\"$(jq -r .id <<<"$V")\",
+    filter:\"sprint:\\\"Sprint N\\\"\"}){projectV2View{number filter}}}"
+  ```
+
+- **Stale sprint values:** list open items whose Sprint is the planned sprint but that were not
+  chosen (or not Ready), and items still on an older sprint. Propose clearing or moving them.
+
 Verify with `gh project item-list` that the fields changed before reporting.
 
 ## 6. Record in Notion
 
 Create a page "Sprint N planning" in the Meeting notes database (Date, Attendees = GitHub
-handles, Processed to backlog = No) with: Context (dates, team, deadline), Capacity,
+handles, Processed to backlog = No). Its first line says which sprint is planned, its dates,
+and why (current sprint joined mid-way, or next sprint). Then: Context (team, deadline), Capacity,
 Sprint goal (proposed or confirmed), Sprint backlog table (#, item, pts, prio, status, note),
 Findings, Decisions (including items moved out and why), Follow-ups. Update it as decisions
 come in. For content with tables, rewrite the page with `replace_content`; `update_content`
