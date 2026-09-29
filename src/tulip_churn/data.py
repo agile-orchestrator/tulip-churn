@@ -1,16 +1,24 @@
 """Load and clean the raw customer extract."""
 
+import os
+from pathlib import Path
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-DATA_PATH = "/home/cedric/repos/innovation-challenge/tulip-churn/data/raw/Churn_Modelling.csv"
+DEFAULT_DATA_PATH = Path(__file__).resolve().parents[2] / "data" / "raw" / "Churn_Modelling.csv"
 
 ID_COLUMNS = ["RowNumber", "CustomerId", "Surname"]
 TARGET = "Exited"
 
 
-def load_raw(path: str = DATA_PATH) -> pd.DataFrame:
-    return pd.read_csv(path)
+def data_path() -> Path:
+    """The raw extract: $TULIP_DATA_PATH if set, else data/raw/ in the repo."""
+    return Path(os.environ.get("TULIP_DATA_PATH", DEFAULT_DATA_PATH))
+
+
+def load_raw(path: str | Path | None = None) -> pd.DataFrame:
+    return pd.read_csv(path or data_path())
 
 
 def clean(df: pd.DataFrame) -> pd.DataFrame:
@@ -22,7 +30,7 @@ def clean(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def load_data(path: str = DATA_PATH) -> pd.DataFrame:
+def load_data(path: str | Path | None = None) -> pd.DataFrame:
     return clean(load_raw(path))
 
 
