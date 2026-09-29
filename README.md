@@ -5,6 +5,10 @@ Retention team can contact them first.
 
 ## Quickstart
 
+New here? Open Claude Code in the repo and run `/setup`: it checks `gh`, `uv`, GitHub
+and project access, `uv sync` and the Gmail and Slack connectors, and tells you what is
+still missing. You can run it again at any time.
+
 ```bash
 uv sync                                   # install deps (Python 3.11+)
 uv run python scripts/generate_data.py    # writes data/raw/Churn_Modelling.csv
