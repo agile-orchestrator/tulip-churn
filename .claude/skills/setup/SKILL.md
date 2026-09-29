@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Take a newcomer who has Claude Code and a clone of this repo to a working environment. Checks gh, uv, GitHub login and project access, uv sync and the connectors the team uses (GitHub, Gmail, Slack), fixes what it safely can and says exactly what the user still has to do. Safe to run again at any time. Use when asked to set up, onboard or check the dev environment.
+description: Take a newcomer who has Claude Code and a clone of this repo to a working environment. Checks gh, uv, GitHub login and project access, uv sync and the connectors the team uses (GitHub, Notion, Slack, optionally Gmail), fixes what it safely can and says exactly what the user still has to do. Safe to run again at any time. Use when asked to set up, onboard or check the dev environment.
 ---
 
 # Set up the tulip-churn environment
@@ -16,7 +16,6 @@ Rules:
 - Only fix things that need no login and no admin rights (for now only `uv sync`). For
   anything else give the exact command or steps, and do not run installers with `sudo` or
   `curl | sh` yourself.
-- Do not depend on Notion: documentation is moving to the GitHub Wiki (#24).
 - A failed check does not stop the run. Carry on and report everything at the end.
 
 ## 1. Tools
@@ -32,8 +31,7 @@ install, the user may need to open a new shell before the tool is on `PATH`.
 ## 2. GitHub login and project access
 
 ```bash
-gh auth status 2>&1 | grep -v -i token          # never echo the token line
-gh auth status 2>&1 | grep -i "token scopes"    # scopes only, the token itself is masked
+gh auth status 2>&1 | grep -iE "logged in|token scopes"   # account and scopes lines only
 gh repo view agile-orchestrator/tulip-churn --json name --jq .name
 gh project view 1 --owner agile-orchestrator --format json --jq .title
 ```
@@ -59,7 +57,7 @@ already installed. If it fails, show the error and stop this step.
 
 ## 4. Connectors
 
-The team works with three services. Check what this Claude Code session can reach:
+Check what this Claude Code session can reach:
 
 ```bash
 claude mcp list
@@ -68,13 +66,15 @@ claude mcp list
 | Service | Used for | Connected when |
 |---|---|---|
 | GitHub | board, issues, PRs | step 2 passed (the team uses the `gh` CLI, not an MCP connector) |
-| Gmail | the PO's daily deadline alerts (`/deadline-alerts`) | a `claude.ai Gmail` line shows `✔ Connected` |
-| Slack | alerts in `#po-deadlines`, team chat (workspace AgileOrchestrators) | a `claude.ai Slack` line shows `✔ Connected` |
+| Notion | Definition of Ready, Definition of Done and the other docs (until they move to the GitHub Wiki, #24) | the `notion` line (from `.mcp.json`) or a `claude.ai Notion` line shows `✔ Connected` |
+| Slack | team chat (workspace AgileOrchestrators) | a `claude.ai Slack` line shows `✔ Connected` |
+| Gmail (optional) | the PO's personal tools only | a `claude.ai Gmail` line shows `✔ Connected` |
 
 Also list every server in `.mcp.json` with its status from `claude mcp list`, so this report
-stays in sync with the repo config. Report `notion` as optional (docs are moving to the
-GitHub Wiki); it only needs the user to run `/mcp` and log in if they still read the Notion
-docs.
+stays in sync with the repo config.
+
+For a missing Notion connector, tell the user to run `/mcp`, pick `notion` and log in with the
+account that has access to the **Tulip Bank** workspace (ask the PO for an invite if needed).
 
 For a missing Gmail or Slack connector, give these steps:
 
@@ -85,8 +85,8 @@ For a missing Gmail or Slack connector, give these steps:
    (ask the PO if there is none in the mailbox).
 3. Restart Claude Code, then run `/setup` again.
 
-Gmail is only needed by the PO. For anyone else, report a missing Gmail as "not needed unless
-you run the deadline alerts", not as a failure.
+Gmail is only needed by the PO. For anyone else, report a missing Gmail as "not needed", not
+as a failure.
 
 ## 5. Report
 
@@ -100,9 +100,9 @@ End with one table, one row per check, and nothing else changed:
 | Repo access | ✅ | — |
 | Project access | ✅ Tulip Churn Board | — |
 | uv sync | ✅ | — |
-| Gmail | ❌ | steps above |
+| Notion | ⚠️ needs authentication | `/mcp`, then log in to `notion` |
 | Slack | ✅ | — |
-| notion (`.mcp.json`, optional) | ⚠️ needs authentication | `/mcp` if you use the Notion docs |
+| Gmail (optional) | — not needed | — |
 
 Then one line: "All set" when every required check is ✅, otherwise the number of open
 actions and the first one to do. Point the user to `README.md` (Quickstart) and `CLAUDE.md`

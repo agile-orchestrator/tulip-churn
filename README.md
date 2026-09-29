@@ -6,7 +6,7 @@ Retention team can contact them first.
 ## Quickstart
 
 New here? Open Claude Code in the repo and run `/setup`: it checks `gh`, `uv`, GitHub
-and project access, `uv sync` and the Gmail and Slack connectors, and tells you what is
+and project access, `uv sync` and the Notion and Slack connectors, and tells you what is
 still missing. You can run it again at any time.
 
 ```bash
