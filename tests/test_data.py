@@ -1,4 +1,6 @@
-from tulip_churn.data import ID_COLUMNS, load_data, split
+from pathlib import Path
+
+from tulip_churn.data import ID_COLUMNS, data_path, load_data, split
 
 
 def test_load_data_drops_id_columns(raw_csv):
@@ -22,3 +24,16 @@ def test_split_keeps_churn_rate(raw_csv):
     df = load_data(raw_csv)
     train, test = split(df)
     assert abs(train["Exited"].mean() - test["Exited"].mean()) < 0.02
+
+
+def test_default_data_path_is_inside_the_repo(monkeypatch):
+    monkeypatch.delenv("TULIP_DATA_PATH", raising=False)
+    repo = Path(__file__).resolve().parents[1]
+    assert data_path() == repo / "data" / "raw" / "Churn_Modelling.csv"
+
+
+def test_data_path_can_be_overridden(monkeypatch, raw_df, tmp_path):
+    csv = tmp_path / "other.csv"
+    raw_df.head(100).to_csv(csv, index=False)
+    monkeypatch.setenv("TULIP_DATA_PATH", str(csv))
+    assert len(load_data()) == 100
