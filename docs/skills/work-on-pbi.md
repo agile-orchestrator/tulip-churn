@@ -142,7 +142,34 @@ Before opening a PR, verify:
 - [ ] README or wiki pages updated if behavior changed
 - [ ] Architecture decisions recorded as ADR if significant
 
-### 8. Open Pull Request
+### 8. Check Issue for Comments and Updates
+
+Before opening the PR, check if there are any comments or updates on the issue that need to be addressed:
+
+```bash
+# View the issue with all comments
+gh issue view <issue-number> --comments
+```
+
+**Review for:**
+- Questions from stakeholders or team members
+- Additional requirements or clarifications
+- Scope changes or adjustments to acceptance criteria
+- Blockers or dependencies that were added
+
+**Actions:**
+- Address any unresolved questions in your implementation
+- Update code/docs if requirements changed
+- Reply to comments explaining what was done
+- Update the issue description if acceptance criteria changed during implementation
+
+**Example:**
+```bash
+# If there's a comment asking about a specific edge case:
+gh issue comment <issue-number> --body "Addressed in commit abc123: added validation for empty input"
+```
+
+### 9. Open Pull Request
 
 ```bash
 # Push branch
@@ -196,7 +223,7 @@ EOF
 - Testing done
 - DoD checklist
 
-### 9. Request Review
+### 10. Request Review
 
 ```bash
 # Add reviewers (if team members are known)
@@ -212,7 +239,7 @@ gh pr edit --add-reviewer <username>
 - Verify commit messages are clear
 - Test the PR branch one more time
 
-### 10. Address Review Comments
+### 11. Address Review Comments
 
 ```bash
 # Make changes based on feedback
@@ -230,7 +257,7 @@ git push
 - Or explain why you're taking a different approach
 - Mark conversations as resolved when done
 
-### 11. Merge and Close
+### 12. Merge and Close
 
 Once approved and CI is green:
 

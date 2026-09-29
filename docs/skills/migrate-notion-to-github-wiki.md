@@ -142,7 +142,45 @@ git push origin master
 open "https://github.com/owner/repo/wiki"
 ```
 
-### 8. Quality Verification
+### 8. Validate Wiki Links
+
+**CRITICAL STEP**: Before pushing, validate all internal wiki links match filenames exactly.
+
+```bash
+# In the wiki repository, run this validation script:
+cd repo.wiki
+
+# 1. Get all wiki page names (without .md)
+ls *.md | sed 's/\.md$//' > /tmp/wiki-pages.txt
+
+# 2. Extract all wiki links from markdown files
+grep -oh '\[\[[^]]*\]\]' *.md | sed 's/\[\[\(.*\)\]\]/\1/' | sort -u > /tmp/wiki-links.txt
+
+# 3. Compare - find links that don't match any page
+comm -23 /tmp/wiki-links.txt /tmp/wiki-pages.txt > /tmp/broken-links.txt
+
+# 4. Show results
+if [ -s /tmp/broken-links.txt ]; then
+  echo "⚠️  Broken wiki links found:"
+  cat /tmp/broken-links.txt
+  echo ""
+  echo "These links need to be fixed to match actual filenames."
+else
+  echo "✅ All wiki links are valid!"
+fi
+```
+
+**To fix broken links:**
+1. For each broken link, find the correct filename from `ls *.md`
+2. Use the Edit tool to replace the broken link with the correct format
+3. **Ask the user to confirm** each link replacement before making changes
+4. Re-run validation after fixes
+
+**Example fixes:**
+- `[[ADR-001: Use FastAPI for the scoring service]]` → `[[ADR-001-Use-FastAPI-for-the-scoring-service]]`
+- `[[Project Overview]]` → Already correct if file is `Project-Overview.md`
+
+### 9. Quality Verification
 
 Check each migrated page in the browser:
 - [ ] Formatting is preserved (headings, lists, bold, italic)
@@ -153,6 +191,32 @@ Check each migrated page in the browser:
 - [ ] Tables are properly formatted
 - [ ] Special elements (callouts, toggles) display correctly
 - [ ] Page navigation in sidebar is correct
+
+### 10. Check Issue Comments and Update
+
+Before marking work complete, check the source issue for any comments or updates:
+
+```bash
+# View issue with comments
+gh issue view <issue-number> --comments
+
+# Check for:
+# - Additional requirements or clarifications
+# - Questions that need answers
+# - Feedback to address
+```
+
+**If there are unresolved comments:**
+1. Read each comment carefully
+2. Address any questions or concerns
+3. Make necessary updates to the wiki or code
+4. Reply to comments explaining what was done
+5. Re-run validation after any changes
+
+**Update the issue if needed:**
+- If acceptance criteria changed during work, update the issue description
+- Link to the PR when it's created
+- Move the issue to "In review" on the project board
 
 ---
 
