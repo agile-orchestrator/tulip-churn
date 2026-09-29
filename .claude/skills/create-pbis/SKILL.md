@@ -49,20 +49,26 @@ open question marked **blocking** or **non-blocking**. Never invent content.
   / So that), Given/When/Then acceptance criteria, technical notes, dependencies and open
   questions, estimate, priority P0-P3.
 
-Run each proposed PBI through the DoR checklist. A PBI that cannot meet it without
-inventing content (blocking open question, unknown metric, unknown estimate) gets
-`needs-refinement` and stays in Backlog. Vague items ("Improve model") likewise.
+Check each proposed PBI against the **entry bar for In refinement** in `CLAUDE.md` and the
+full DoR checklist, as `create-pbi` step 2 does. Do not invent content to pass either.
 
-Show one table: title, estimate, priority, dependencies, DoR result (ready or which
-criteria are missing), and the acceptance criteria it covers. Then show the full bodies.
+- **Meets the entry bar:** Status **In refinement**. Add `needs-refinement` too if other DoR
+  items are still open (blocking question, unknown metric, no estimate).
+- **Misses the entry bar** (vague items like "Improve model"): do not put it in In
+  refinement. List which entry-bar points are missing and what you need. Offer to park it in
+  **Backlog** with `needs-refinement`, and only do so if the user agrees.
+
+Show one table: title, estimate, priority, dependencies, entry-bar and DoR result (which
+Status it gets, and which criteria are missing), and the acceptance criteria it covers. Then show the full bodies.
 Wait for the user to approve, edit or drop items, once for the whole batch.
 
 ## 4. Create
 
 For each approved PBI, in dependency order, follow `create-pbi` step 4: write the body to a
 file in the scratchpad directory, create the issue, set type = Task, link it as a
-sub-issue of the feature, add it to project 1, and set Status = **Backlog**, Story Points,
-Priority (and Sprint only if the user names one). Labels: always `pbi`; an area label if
+sub-issue of the feature, add it to project 1, and set Status (**In refinement**, or
+**Backlog** for parked items; look the option up by name as `create-pbi` does), Story
+Points, Priority (and Sprint only if the user names one). Labels: always `pbi`; an area label if
 one fits (`api`, `model`, `data`, `docs`, `ci`); `needs-refinement` where applicable. Only
 set Status **Ready** if the user asks and every DoR item is met.
 
@@ -73,7 +79,7 @@ fields.
 
 ## 5. Verify and report
 
-For each issue check type, labels and parent (`gh api .../issues/<n> --jq
-'{type:.type.name, labels:[.labels[].name]}'`). Report the URLs in a table with estimate,
+For each issue check type, labels, parent and board fields as `create-pbi` step 5 does. A
+Status of `null` means the edit failed: fix it before reporting. Report the URLs in a table with estimate,
 priority, DoR result and board fields set, the total points, and any open questions and
 `needs-refinement` items.
