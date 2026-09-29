@@ -17,6 +17,8 @@ Read the Notion **Definition of Ready** before creating or refining backlog item
 
 ## Commands
 
+First time, or something looks broken: run `/setup` (`.claude/skills/setup/SKILL.md`).
+
 ```bash
 uv sync
 uv run python scripts/generate_data.py          # data/raw/Churn_Modelling.csv
