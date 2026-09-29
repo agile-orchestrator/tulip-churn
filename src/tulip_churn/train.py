@@ -108,7 +108,7 @@ def train(
     source = Path(data) if data else data_path()
     model, metrics = fit_and_evaluate(load_data(source), config or TrainConfig())
 
-    status = _git("status", "--porcelain")
+    status = _git("status", "--porcelain", "--untracked-files=no")
     metrics = {
         "trained_at": datetime.now(UTC).isoformat(timespec="seconds"),
         "package_version": __version__,
