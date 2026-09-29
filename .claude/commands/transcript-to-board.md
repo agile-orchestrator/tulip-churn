@@ -11,3 +11,5 @@ Read the meeting transcript: $ARGUMENTS (from the wiki if it is a page reference
 4. After I confirm, create the issues, link them as sub-issues, and add them to the project
    with Status In refinement if they meet the entry bar in `CLAUDE.md`, otherwise Backlog with
    `needs-refinement`. Then list the created issues (number, title, status) in your reply.
+5. Update the wiki meeting page's "Processed to backlog" field from "no" to "yes: #n, #m" with
+   the created issue numbers. Clone the wiki, edit the page, commit and push.
