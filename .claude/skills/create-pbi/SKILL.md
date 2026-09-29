@@ -30,13 +30,21 @@ Title: short imperative ("Make decision threshold configurable"), no "[PBI]" pre
 For model or data changes also name the metric to improve (with its current value), confirm
 the data exists at scoring time, and note compliance impact.
 
-If the request is vague ("Improve model") or a DoR item cannot be filled in, do not invent
-content: add the `needs-refinement` label and keep the item in In refinement.
+Do not invent content to fill a heading. Then check the draft against the **entry bar for
+In refinement** in `CLAUDE.md` (imperative title, user story, at least one testable acceptance
+criterion, candidate parent or "to be decided", open questions listed):
+
+- **Meets the entry bar:** Status **In refinement**. Add `needs-refinement` too if other DoR
+  items are still open (for example blocking questions, no parent, no estimate).
+- **Misses the entry bar** (for example "Improve model"): do not put it in In refinement. Tell
+  the user it needs more work, list exactly which entry-bar points are missing and what you
+  would need from them. Offer to park it in **Backlog** with `needs-refinement`, and only do
+  so if the user agrees.
 
 ## 3. Confirm
 
-Show the title, body, labels, parent, estimate and priority. Wait for the user's OK before
-creating anything.
+Show the title, body, labels, parent, estimate, priority and the Status it will get (with
+the entry-bar result). Wait for the user's OK before creating anything.
 
 ## 4. Create
 
@@ -68,14 +76,14 @@ FIELDS=$(gh project field-list 1 --owner agile-orchestrator --format json)
 PROJECT_ID=$(gh project view 1 --owner agile-orchestrator --format json --jq .id)
 STATUS_FIELD=$(jq -r '.fields[] | select(.name=="Status") | .id' <<<"$FIELDS")
 jq -r '.fields[] | select(.name=="Status") | .options[].name' <<<"$FIELDS"   # configured options
-REFINEMENT=$(jq -r '.fields[] | select(.name=="Status") | .options[] | select(.name=="In refinement") | .id' <<<"$FIELDS")
+STATUS_OPT=$(jq -r --arg s "<In refinement|Backlog>" '.fields[] | select(.name=="Status") | .options[] | select(.name==$s) | .id' <<<"$FIELDS")
 gh project item-edit --project-id $PROJECT_ID --id <item-id> --field-id $STATUS_FIELD \
-  --single-select-option-id $REFINEMENT
+  --single-select-option-id $STATUS_OPT
 ```
 
-New PBIs, including `needs-refinement` ones, go to **In refinement**. Only set **Ready** if
-the user asks and every DoR item is met. If the In refinement option is missing, stop and
-show the user the configured options rather than guessing.
+Use the Status decided in step 2: **In refinement** if the entry bar is met, **Backlog** if
+not. Only set **Ready** if the user asks and every DoR item is met. If the option is missing,
+stop and show the user the configured options rather than guessing.
 
 If a `gh project` command fails (for example "Could not resolve to a ProjectV2"), do not
 retry in a loop. Say what is missing and that the issue exists without board fields.
