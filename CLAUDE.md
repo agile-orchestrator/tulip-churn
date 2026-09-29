@@ -37,8 +37,20 @@ uv run ruff check .
 **Hierarchy:** Epic → Feature → PBI (issue type Task) / Bug. Link children as GitHub
 sub-issues of their parent and also set the matching label (`epic`, `feature`, `pbi`, `bug`).
 
-**Board columns (Status field):** Backlog → Ready → In progress → In review → Done.
-An item may only move to **Ready** when it meets the Definition of Ready.
+**Board columns (Status field):** Backlog → In refinement → Ready → In progress → In review → Done.
+A new item goes to **In refinement** only when it meets the entry bar below; otherwise it
+stays in **Backlog**. It moves to **Ready** only when it meets the full Definition of Ready.
+
+**Entry bar for In refinement** (no content invented to pass it):
+- short imperative title
+- user story (As a / I want / So that)
+- at least one testable acceptance criterion (Given/When/Then)
+- a candidate parent feature, or a note that one is still to be decided
+- open questions listed
+
+If an item misses any of these, do not put it in In refinement: tell the user which points
+are missing and that it needs more work first. With their OK, park it in **Backlog** with the
+`needs-refinement` label.
 
 **Other project fields:** Sprint (iteration), Story Points (1, 2, 3, 5, 8, 13), Priority (P0–P3).
 
@@ -51,7 +63,7 @@ An item may only move to **Ready** when it meets the Definition of Ready.
 **Branches:** `feat/<issue>-short-slug`, `fix/<issue>-short-slug`, `chore/<slug>`.
 **Commits:** Conventional Commits (`feat:`, `fix:`, `test:`, `docs:`, `chore:`, `refactor:`).
 **PRs:** fill `.github/pull_request_template.md`, reference the issue with `Closes #n`,
-move the item to **In review**.
+move the item to **In review**. `/review-publish-pr` reviews the branch and does all three.
 
 ## Board operations with the gh CLI
 
