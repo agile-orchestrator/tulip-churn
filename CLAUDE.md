@@ -37,8 +37,9 @@ uv run ruff check .
 **Hierarchy:** Epic → Feature → PBI (issue type Task) / Bug. Link children as GitHub
 sub-issues of their parent and also set the matching label (`epic`, `feature`, `pbi`, `bug`).
 
-**Board columns (Status field):** Backlog → Ready → In progress → In review → Done.
-An item may only move to **Ready** when it meets the Definition of Ready.
+**Board columns (Status field):** Backlog → In refinement → Ready → In progress → In review → Done.
+New PBIs start in **In refinement**. An item may only move to **Ready** when it meets the
+Definition of Ready.
 
 **Other project fields:** Sprint (iteration), Story Points (1, 2, 3, 5, 8, 13), Priority (P0–P3).
 
@@ -46,7 +47,7 @@ An item may only move to **Ready** when it meets the Definition of Ready.
 - Title: short imperative ("Make decision threshold configurable").
 - Body: user story (As a / I want / So that) + testable acceptance criteria (Given/When/Then)
   + technical notes + estimate. Use the templates in `.github/ISSUE_TEMPLATE/`.
-- Vague items ("Improve model") get the `needs-refinement` label and stay in Backlog.
+- Vague items ("Improve model") get the `needs-refinement` label and stay in In refinement.
 
 **Branches:** `feat/<issue>-short-slug`, `fix/<issue>-short-slug`, `chore/<slug>`.
 **Commits:** Conventional Commits (`feat:`, `fix:`, `test:`, `docs:`, `chore:`, `refactor:`).

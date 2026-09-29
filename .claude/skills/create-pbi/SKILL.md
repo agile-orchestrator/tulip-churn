@@ -31,7 +31,7 @@ For model or data changes also name the metric to improve (with its current valu
 the data exists at scoring time, and note compliance impact.
 
 If the request is vague ("Improve model") or a DoR item cannot be filled in, do not invent
-content: add the `needs-refinement` label and keep the item in Backlog.
+content: add the `needs-refinement` label and keep the item in In refinement.
 
 ## 3. Confirm
 
@@ -55,10 +55,27 @@ gh project item-add 1 --owner agile-orchestrator --url $URL --format json --jq .
 Labels: always `pbi`; add an area label if one fits (`api`, `model`, `docs`, `ci`), and
 `sprint-N` only if the user names a sprint (or `needs-refinement`, see above).
 
-Then set the project fields with `gh project field-list 1 --owner agile-orchestrator
---format json` (ids) and `gh project item-edit`: Status = **Backlog**, Story Points,
-Priority, and Sprint if given. Only set Status to **Ready** if the user asks and every DoR
-item is met.
+Then set the project fields with `gh project item-edit`: Status, Story Points, Priority, and
+Sprint if given. Always set Status: an item left at "No status" does not show up in any
+board column.
+
+Status must be one of the options configured on the project, never a name taken from
+elsewhere ("New", "Triage", "To do" do not exist on this board). Look the
+option up by name instead of hard-coding ids:
+
+```bash
+FIELDS=$(gh project field-list 1 --owner agile-orchestrator --format json)
+PROJECT_ID=$(gh project view 1 --owner agile-orchestrator --format json --jq .id)
+STATUS_FIELD=$(jq -r '.fields[] | select(.name=="Status") | .id' <<<"$FIELDS")
+jq -r '.fields[] | select(.name=="Status") | .options[].name' <<<"$FIELDS"   # configured options
+REFINEMENT=$(jq -r '.fields[] | select(.name=="Status") | .options[] | select(.name=="In refinement") | .id' <<<"$FIELDS")
+gh project item-edit --project-id $PROJECT_ID --id <item-id> --field-id $STATUS_FIELD \
+  --single-select-option-id $REFINEMENT
+```
+
+New PBIs, including `needs-refinement` ones, go to **In refinement**. Only set **Ready** if
+the user asks and every DoR item is met. If the In refinement option is missing, stop and
+show the user the configured options rather than guessing.
 
 If a `gh project` command fails (for example "Could not resolve to a ProjectV2"), do not
 retry in a loop. Say what is missing and that the issue exists without board fields.
@@ -67,6 +84,10 @@ retry in a loop. Say what is missing and that the issue exists without board fie
 
 ```bash
 gh api repos/agile-orchestrator/tulip-churn/issues/$N --jq '{type:.type.name, labels:[.labels[].name]}'
+gh project item-list 1 --owner agile-orchestrator --format json -L 200 \
+  --jq ".items[] | select(.content.number==$N) | {status, priority, \"story Points\", sprint}"
 ```
+
+If status comes back `null`, the Status edit failed: fix it before reporting.
 
 Report the issue URL, type, labels, parent, and which board fields were or were not set.
