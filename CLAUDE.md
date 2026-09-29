@@ -63,7 +63,7 @@ are missing and that it needs more work first. With their OK, park it in **Backl
 **Branches:** `feat/<issue>-short-slug`, `fix/<issue>-short-slug`, `chore/<slug>`.
 **Commits:** Conventional Commits (`feat:`, `fix:`, `test:`, `docs:`, `chore:`, `refactor:`).
 **PRs:** fill `.github/pull_request_template.md`, reference the issue with `Closes #n`,
-move the item to **In review**.
+move the item to **In review**. `/review-publish-pr` reviews the branch and does all three.
 
 ## Board operations with the gh CLI
 
