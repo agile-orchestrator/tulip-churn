@@ -14,7 +14,6 @@ NUMERIC = [
     "EstimatedSalary",
     "BalanceToSalary",
     "ZeroBalance",
-    "AccountClosureRequested",
 ]
 FEATURES = CATEGORICAL + NUMERIC
 
@@ -26,7 +25,4 @@ def add_features(df: pd.DataFrame) -> pd.DataFrame:
     df["AgeBand"] = pd.cut(
         df["Age"], bins=[0, 30, 40, 50, 60, 120], labels=["<30", "30-39", "40-49", "50-59", "60+"]
     ).astype(str)
-    # Customers who asked the branch to close their account (CRM flag).
-    exited = df["Exited"] if "Exited" in df.columns else 0
-    df["AccountClosureRequested"] = ((exited == 1) & (df["Tenure"] >= 0)).astype(int)
     return df

@@ -76,7 +76,8 @@ from another feature or chore branch.
 **Commits:** Conventional Commits (`feat:`, `fix:`, `test:`, `docs:`, `chore:`, `refactor:`).
 **PRs:** fill `.github/pull_request_template.md`, reference the issue with `Closes #n`,
 request a reviewer (a collaborator other than the author, picked as in the `log-finding`
-skill), and move the item to **In review**.
+skill), and move the item to **In review**. `/review-publish-pr` reviews the branch and does
+all of this.
 
 ## Board operations with the gh CLI
 
