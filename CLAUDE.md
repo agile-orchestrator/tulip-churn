@@ -65,15 +65,18 @@ current task (a bug, hard-coded value, stale output, leaking feature, flaky chec
 docs that no longer match the code), put it on the board with the `log-finding` skill. Don't
 ask first and don't fix it in the current branch. Findings always go to **Backlog** with
 `needs-refinement`, never straight to In refinement. This overrides the "with their OK" above.
-Wrong board state goes in your report, not in a new issue. Wrong instructions in this repo get
-fixed on a `chore/` branch. Report P0 findings right away and everything else at the end of
-your reply.
+If the fix is only a few lines (no open decisions, no retrain), don't wait: fix it right away
+on its own branch and open a PR with a reviewer, as described in the skill. Wrong board state
+goes in your report, not in a new issue. Wrong instructions in this repo get fixed on a
+`chore/` branch. Report P0 findings right away and everything else at the end of your reply.
 
 **Branches:** `feat/<issue>-short-slug`, `fix/<issue>-short-slug`, `chore/<slug>`.
-Branch from an up-to-date `main`, never from another feature or chore branch.
+Branch from an up-to-date `main` (`git fetch origin` first, branch from `origin/main`), never
+from another feature or chore branch.
 **Commits:** Conventional Commits (`feat:`, `fix:`, `test:`, `docs:`, `chore:`, `refactor:`).
 **PRs:** fill `.github/pull_request_template.md`, reference the issue with `Closes #n`,
-move the item to **In review**.
+request a reviewer (a collaborator other than the author, picked as in the `log-finding`
+skill), and move the item to **In review**.
 
 ## Board operations with the gh CLI
 
