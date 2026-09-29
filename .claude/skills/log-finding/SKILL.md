@@ -69,13 +69,13 @@ set fields by option name), with these differences:
 
 - Bug: `--label bug`, issue type `Bug`. PBI: `--label pbi`, issue type `Task`. Add an area
   label if one fits (`data`, `model`, `api`, `ci`, `docs`).
-- **Status**: **In refinement** if the draft meets the entry bar in `CLAUDE.md`, otherwise
-  **Backlog** with `needs-refinement`. You do not need to ask before parking it in Backlog.
-- Add `needs-refinement` as well if Definition of Ready items are still open. Estimates are
-  only suggestions until the team refines the item.
+- **Status**: always **Backlog**, with the `needs-refinement` label, even when the draft
+  meets the entry bar. The team decides what moves into **In refinement**. Estimates are only
+  suggestions until the team refines the item.
 - **Priority**: set the field. P0 only for wrong results or outages in production, security or
   compliance problems. Say which priority you chose and why in the report.
-- **Never** set Sprint, Story Points or **Ready**. That is for the team and the PO.
+- **Never** set Sprint, Story Points, **In refinement** or **Ready**. That is for the team
+  and the PO.
 
 Verify with step 5 of `create-pbi`.
 

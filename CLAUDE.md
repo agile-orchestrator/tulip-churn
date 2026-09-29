@@ -63,7 +63,8 @@ are missing and that it needs more work first. With their OK, park it in **Backl
 **Found something off? Log it.** Whenever you notice a problem outside the scope of your
 current task (a bug, hard-coded value, stale output, leaking feature, flaky check, deprecation,
 docs that no longer match the code), put it on the board with the `log-finding` skill. Don't
-ask first and don't fix it in the current branch. This overrides the "with their OK" above.
+ask first and don't fix it in the current branch. Findings always go to **Backlog** with
+`needs-refinement`, never straight to In refinement. This overrides the "with their OK" above.
 Wrong board state goes in your report, not in a new issue. Wrong instructions in this repo get
 fixed on a `chore/` branch. Report P0 findings right away and everything else at the end of
 your reply.
