@@ -15,6 +15,27 @@ model and a FastAPI scoring service.
 Read the wiki **Definition of Ready** before creating or refining backlog items and the
 **Definition of Done** before opening or reviewing a PR.
 
+## Reading and editing the wiki
+
+**To read wiki pages** (GitHub has no wiki API):
+```bash
+# Read a wiki page via raw GitHub URL
+curl -s https://raw.githubusercontent.com/wiki/agile-orchestrator/tulip-churn/Definition-of-Ready.md
+
+# Example: read DoR for a command
+curl -s https://raw.githubusercontent.com/wiki/agile-orchestrator/tulip-churn/Definition-of-Ready.md | grep -A 5 "PBI"
+```
+
+**To edit wiki pages**, clone the wiki repository:
+```bash
+gh repo clone agile-orchestrator/tulip-churn.wiki
+cd tulip-churn.wiki
+# Make changes, commit, and push
+git add .
+git commit -m "docs: update wiki page"
+git push origin master
+```
+
 ## Commands
 
 ```bash
