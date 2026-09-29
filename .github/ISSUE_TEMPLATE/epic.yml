@@ -1,29 +1,61 @@
 name: Epic
-description: A large business outcome that spans several features and sprints.
+description: A large business outcome that spans several features and sprints. Must be SMART.
 title: "[Epic] "
 labels: [epic]
 type: Epic
 body:
-  - type: textarea
-    id: outcome
+  - type: input
+    id: goal
     attributes:
-      label: Business outcome
-      description: What changes for the bank or the customer when this is done?
+      label: Business goal
+      description: Link to the goal in Notion (Project overview or meeting notes) and its SMART statement.
     validations:
       required: true
   - type: textarea
-    id: stakeholders
+    id: outcome
     attributes:
-      label: Stakeholders
+      label: Business outcome (Specific)
+      description: What changes for the bank or the customer, for whom and where, when this is done?
+    validations:
+      required: true
   - type: textarea
     id: success
     attributes:
-      label: Success metrics
-      description: How will we measure it?
+      label: Success metric (Measurable)
+      description: Metric name, baseline (current value) and target value, and how it is measured.
+    validations:
+      required: true
+  - type: input
+    id: leading
+    attributes:
+      label: Leading indicator
+      description: A metric that moves earlier than the success metric.
+  - type: input
+    id: target_date
+    attributes:
+      label: Target date (Time-bound)
+      description: Not later than the goal's deadline. Default is one quarter.
+      placeholder: "2026-12-18"
+    validations:
+      required: true
+  - type: textarea
+    id: achievable
+    attributes:
+      label: Achievability notes (Achievable)
+      description: Finishable within the period? Data available at scoring time, capacity, dependencies.
+  - type: textarea
+    id: stakeholders
+    attributes:
+      label: Stakeholders (Relevant)
   - type: textarea
     id: scope
     attributes:
       label: In scope / out of scope
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks and warnings
+      description: Soft SMART warnings and open questions, each marked blocking or non-blocking.
   - type: input
     id: notion
     attributes:
