@@ -164,5 +164,10 @@ operation: what was asked, what the harness did, which connectors, and what was 
   under #28 covered Slack, and the existing `create-pbi` skill already fits, so no new skill.
   Claude drafted the PBI, the PO approved, and it created #53 (Task, sub-issue of #28) and
   set `Closes #53` on PR #52. *Connectors:* gh CLI.
-- *Miss:* the board fields (Status In review, P2, 2 points) were not set: the `gh` token lacked
-  the `project` scope. The PO has to run `gh auth refresh -s project`.
+- *Miss:* the board fields were not set at first because the `gh` token lacked the `project`
+  scope. `! gh auth refresh -s project` fails without a TTY (it asks for `-h github.com` and
+  then waits for the browser), so the PO ran it in a separate terminal. After that Claude
+  added #53 to the board: In review, P2, 2 points. *Connectors:* gh CLI.
+- *Lesson:* the GraphQL `closingIssuesReferences` of PR #52 stayed empty after adding
+  `Closes #53`, and it is empty for older PRs too, yet `Closes #24` in PR #40 did close #24 on
+  merge. That field is no proof of the link here; the issue timeline is.
