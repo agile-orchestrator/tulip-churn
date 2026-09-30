@@ -6,6 +6,7 @@ Usage: uv run python scripts/generate_data.py [--rows 10000] [--seed 42]
 import argparse
 from pathlib import Path
 
+from tulip_churn.data import TARGET
 from tulip_churn.synthetic import generate
 
 OUT = Path(__file__).resolve().parents[1] / "data" / "raw" / "Churn_Modelling.csv"
@@ -20,7 +21,7 @@ def main() -> None:
     df = generate(args.rows, args.seed)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(OUT, index=False)
-    print(f"Wrote {len(df)} rows to {OUT} (churn rate {df['Exited'].mean():.1%})")
+    print(f"Wrote {len(df)} rows to {OUT} (churn rate {df[TARGET].mean():.1%})")
 
 
 if __name__ == "__main__":

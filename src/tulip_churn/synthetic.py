@@ -6,6 +6,8 @@ Same columns and roughly the same distributions, so the code works with either s
 import numpy as np
 import pandas as pd
 
+from tulip_churn.data import TARGET
+
 SURNAMES = [
     "Janssens", "Peeters", "Maes", "Jacobs", "Mertens", "Willems", "Claes", "Goossens",
     "Wouters", "De Smet", "Dubois", "Lambert", "Martin", "Garcia", "Lopez", "Muller",
@@ -58,6 +60,6 @@ def generate(n: int = 10_000, seed: int = 42) -> pd.DataFrame:
             "HasCrCard": has_cr_card,
             "IsActiveMember": is_active,
             "EstimatedSalary": salary,
-            "Exited": exited,
+            TARGET: exited,
         }
     )
