@@ -204,3 +204,20 @@ operation: what was asked, what the harness did, which connectors, and what was 
   fast path, and enabling a lint rule is a team decision. The broken wiki-push instruction was
   fixed in the repo: PR #60 (`chore/wiki-push-credentials`, `/setup` runs `gh auth setup-git`),
   with AdamAlansary as reviewer. *Connectors:* gh CLI (issues, Projects).
+- **Correction: slopguard never ran on the #11 code.** The PO asked why it did not fire.
+  Reading its source showed that the Stop hook only checks files `git status` shows as changed.
+  Claude had committed `compare.py` during the turn, so at Stop the tree was clean and the hook
+  let everything through without checking. "No blocks" above meant *not checked*, not *clean*.
+  The code met the limits only because Claude had read `[tool.slopguard]` and run the hook by
+  hand before committing.
+- *Lesson:* a guard built for "Claude edits, the human commits" is silently off when the agent
+  commits on its own, which is exactly what `work-on-pbi` and `log-finding` do. A green check
+  with nothing checked looks like a pass.
+- **Fix.** A `PreToolUse` hook (`.claude/hooks/slopguard-on-commit.sh`) runs the slopguard
+  checks before every `git commit` Claude makes, and exit 2 blocks the commit. Tested with a
+  probe file: it blocks a 9-branch, 5-argument function, and it lets clean commits and other git
+  commands through. Upstream issue opened on kimzed/python-slopguard.
+- **Reset for a rerun.** At the PO's request the #11 code was taken off the branch (the
+  comparison module, tests, report and xgboost dependency) and the branch was force-pushed.
+  PR #58 was closed, and #11 went back to In progress so the PO can rerun the task with the new
+  hook.
