@@ -145,3 +145,20 @@ operation: what was asked, what the harness did, which connectors, and what was 
   opened PR #51 from the template (no issue: team tooling under #28) and requested AdamAlansary
   as reviewer, the only other collaborator who committed to the touched paths. Lint and tests
   green. *Connectors:* gh CLI.
+
+### Picking up a PBI — #11 "Improve model"
+- The PO asked to take the PBI about improving the model: Claude assigned #11 to them
+  (`gh api .../assignees`). *Connectors:* gh CLI.
+- *Miss flagged:* #11 is still a one-liner with `needs-refinement` ("maybe try xgboost") and
+  overlaps #12 (compare candidate models), so it does not meet the Definition of Ready yet.
+- **slopguard setup for #11.** The PO wanted the `python-slopguard` Stop hook before starting.
+  Claude installed it as a dev dependency, walked through every setting one at a time with
+  examples measured on this repo (ruff, vulture, PMD), and applied the PO's choices: complexity 4,
+  15 statements, return tuples of 2, 3 types per hint, `existing_violations = "block"`,
+  PMD required. It installed PMD locally and added a type-hint rule to `AGENTS.md`. Committed on
+  `feat/11-improve-model`, not `main`, at the PO's request. *Connectors:* gh CLI.
+- *Lesson:* testing a claim beats explaining it. Claude's copy-paste example was wrong: PMD
+  only matches exact copies, even with `--ignore-identifiers`. The PO spotted it, and Claude
+  opened kimzed/python-slopguard#1.
+- *Miss:* `on_missing_tool = "error"` blocked Claude's own next Stop before PMD was installed,
+  and the generated `vulture_whitelist.py` broke `ruff check` until it was excluded.

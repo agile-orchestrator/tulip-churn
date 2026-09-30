@@ -22,6 +22,7 @@ dev = [
     "nbconvert>=7.16",
     "ipykernel>=6.29",
     "matplotlib>=3.9",
+    "slopguard",
 ]
 
 [build-system]
@@ -33,7 +34,7 @@ packages = ["src/tulip_churn"]
 
 [tool.ruff]
 line-length = 100
-extend-exclude = ["notebooks"]
+extend-exclude = ["notebooks", "vulture_whitelist.py"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B"]
@@ -41,3 +42,42 @@ select = ["E", "F", "I", "B"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+
+[tool.uv.sources]
+slopguard = { git = "https://github.com/kimzed/python-slopguard" }
+
+[tool.slopguard]
+exclude = ["notebooks/*"]
+allow_suppression_comments = false
+max_findings = 10
+on_missing_tool = "error"
+instructions_to_claude_on_block = "Fix by refactoring: split long or branchy functions into small named helpers in the same module, and group many arguments into a dataclass. Never add # noqa. If a fix needs a design decision, say so instead of forcing it."
+
+[tool.slopguard.edit]
+enabled = true
+max_complexity = 4
+max_args = 4
+max_positional_args = 4
+max_statements = 15
+max_nested_blocks = 3
+max_file_lines = 400
+max_annotation_depth = 3
+max_annotation_elements = 3
+max_return_tuple = 2
+existing_violations = "block"
+exclude = ["scripts/*"]
+
+[tool.slopguard.dead_code]
+enabled = true
+paths = ["src", "scripts", "tests"]
+min_confidence = 60
+ignore_decorators = ["@app.*", "@pytest.fixture"]
+ignore_names = []
+whitelist = "vulture_whitelist.py"
+
+[tool.slopguard.duplication]
+enabled = true
+paths = ["src", "tests", "scripts"]
+min_tokens = 50
+min_occurrences = 4
+exclude = []
