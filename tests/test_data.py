@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from tulip_churn.data import ID_COLUMNS, data_path, load_data, split
+from tulip_churn.data import ID_COLUMNS, TARGET, data_path, load_data, split
 
 
 def test_load_data_drops_id_columns(raw_csv):
@@ -23,7 +23,7 @@ def test_split_sizes(raw_csv):
 def test_split_keeps_churn_rate(raw_csv):
     df = load_data(raw_csv)
     train, test = split(df)
-    assert abs(train["Exited"].mean() - test["Exited"].mean()) < 0.02
+    assert abs(train[TARGET].mean() - test[TARGET].mean()) < 0.02
 
 
 def test_default_data_path_is_inside_the_repo(monkeypatch):

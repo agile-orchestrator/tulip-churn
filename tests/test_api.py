@@ -7,7 +7,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 from tulip_churn import api
-from tulip_churn.data import clean
+from tulip_churn.data import TARGET, clean
 from tulip_churn.features import CATEGORICAL, FEATURES, NUMERIC, add_features
 
 CUSTOMER = {
@@ -33,7 +33,7 @@ def client(tmp_path_factory, raw_df):
              ("num", StandardScaler(), NUMERIC)]
         ),
         LogisticRegression(max_iter=1000),
-    ).fit(df[FEATURES], df["Exited"])
+    ).fit(df[FEATURES], df[TARGET])
     path = tmp_path_factory.mktemp("models") / "model.joblib"
     joblib.dump(model, path)
 
