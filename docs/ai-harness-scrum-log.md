@@ -160,3 +160,9 @@ operation: what was asked, what the harness did, which connectors, and what was 
   bot an optional check in `/setup`, opened PR #52 and requested theunis as reviewer. The PR
   flags that the per-user `claude.ai Slack` connector already exists and the bot needs a shared
   token. *Connectors:* gh CLI.
+- **Issue for the PR.** The PO asked for a linked issue or a new one plus a skill. Nothing
+  under #28 covered Slack, and the existing `create-pbi` skill already fits, so no new skill.
+  Claude drafted the PBI, the PO approved, and it created #53 (Task, sub-issue of #28) and
+  set `Closes #53` on PR #52. *Connectors:* gh CLI.
+- *Miss:* the board fields (Status In review, P2, 2 points) were not set: the `gh` token lacked
+  the `project` scope. The PO has to run `gh auth refresh -s project`.
