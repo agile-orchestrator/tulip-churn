@@ -67,6 +67,7 @@ else
   git clone https://github.com/agile-orchestrator/tulip-churn.wiki.git ../tulip-churn.wiki
 fi
 ls ../tulip-churn.wiki/Definition-of-Ready.md
+gh auth setup-git   # lets `git push` on the HTTPS wiki clone use the gh login
 ```
 
 Run it yourself. The check passes when `Definition-of-Ready.md` exists. If the pull fails
