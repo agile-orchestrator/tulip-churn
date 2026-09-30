@@ -16,9 +16,9 @@ gh api repos/agile-orchestrator/tulip-churn/issues/<n>/sub_issues --jq '.[] | {n
 gh api repos/agile-orchestrator/tulip-churn/issues/<n>/parent --jq '{number,title}'
 ```
 
-Read the **Definition of Ready** in Notion (not the "(backup)" copy), the epic the feature
+Read the **[Definition of Ready](https://github.com/agile-orchestrator/tulip-churn/wiki/Definition-of-Ready)** on the wiki, the epic the feature
 belongs to (for the metric and deadline), `.github/ISSUE_TEMPLATE/pbi.yml`, and the code and
-Notion **Data dictionary** where the feature touches data or the model. Existing
+wiki [Data Dictionary](https://github.com/agile-orchestrator/tulip-churn/wiki/Data-Dictionary) where the feature touches data or the model. Existing
 sub-issues are already covered: do not propose duplicates, and offer to refine them with
 `refine-pbi` instead.
 

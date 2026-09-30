@@ -15,8 +15,8 @@ gh api repos/agile-orchestrator/tulip-churn/issues/<n>/sub_issues --jq '.[] | {n
 ```
 
 If `$ARGUMENTS` is free text or a goal, run the `create-epic` skill first and continue with
-the epic it creates. Also read the Notion **Project overview** and the **Data dictionary**
-(not the "(backup)" copies), and list existing features with `gh issue list --label feature
+the epic it creates. Also read the wiki [Project Overview](https://github.com/agile-orchestrator/tulip-churn/wiki/Project-Overview) and
+[Data Dictionary](https://github.com/agile-orchestrator/tulip-churn/wiki/Data-Dictionary), and list existing features with `gh issue list --label feature
 --state all`. Do not propose a feature that already exists.
 
 ## 2. SMART gate on the epic

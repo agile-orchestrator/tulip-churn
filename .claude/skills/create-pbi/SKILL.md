@@ -9,8 +9,7 @@ alone: it skips the issue template, so the type, parent link and board fields ge
 
 ## 1. Check the Definition of Ready
 
-Read the **Definition of Ready** (Notion page under "Tulip Bank — Churn Early-Warning", or
-the GitHub Wiki once migrated). Do not use the "(backup)" copy. Also read
+Read the **[Definition of Ready](https://github.com/agile-orchestrator/tulip-churn/wiki/Definition-of-Ready)** on the wiki. Also read
 `.github/ISSUE_TEMPLATE/pbi.yml` for the body headings.
 
 ## 2. Draft the body

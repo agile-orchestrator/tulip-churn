@@ -26,8 +26,7 @@ empty board fields. Start with `$ARGUMENTS` if given, otherwise ask which one to
   and `gh issue view <n> -R agile-orchestrator/tulip-churn --comments`
 - Its board fields (Status, Priority, Story Points, Sprint) from `gh project item-list`
 - The parent feature and its epic, to judge whether the parent fits
-- The **Definition of Ready**: the live page under "Tulip Bank — Churn Early-Warning" (Notion,
-  or the GitHub Wiki once migrated). Never the "(backup)" copy.
+- The **[Definition of Ready](https://github.com/agile-orchestrator/tulip-churn/wiki/Definition-of-Ready)** on the wiki.
 
 ## 3. Check it
 

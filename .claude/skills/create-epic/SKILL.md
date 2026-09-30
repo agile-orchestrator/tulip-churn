@@ -1,7 +1,7 @@
 ---
 name: create-epic
-description: Turn a business goal from Notion into a SMART Epic as a GitHub issue with the correct type, label and board fields. Use when asked to create or write an epic, or to turn a business goal or objective into an epic for the Tulip Churn board.
-argument-hint: <business goal, Notion page URL, or objective name>
+description: Turn a business goal from the wiki into a SMART Epic as a GitHub issue with the correct type, label and board fields. Use when asked to create or write an epic, or to turn a business goal or objective into an epic for the Tulip Churn board.
+argument-hint: <business goal, wiki page name or URL, or objective name>
 ---
 
 Create an Epic from the business goal in `$ARGUMENTS`. The goal must be SMART, and the epic
@@ -10,14 +10,15 @@ skips the template, so the type and board fields get lost.
 
 ## 1. Read the goal
 
-Business goals live in Notion under "Tulip Bank — Churn Early-Warning" (via the `notion`
-MCP server). Do not use the "(backup)" copies.
+Business goals live in the [GitHub Wiki](https://github.com/agile-orchestrator/tulip-churn/wiki) of this repo (clone
+`agile-orchestrator/tulip-churn.wiki` or use `gh api`/WebFetch on the page).
 
-- **Project overview**: Objectives, Success metrics, Stakeholders, Scope, Timeline.
-- **Meeting notes**: stakeholder sessions (for example "Q4 goals with the PO") where goals
-  are agreed. Look at the "Processed to backlog" property.
+- **[Project Overview](https://github.com/agile-orchestrator/tulip-churn/wiki/Project-Overview)**: Objectives, Success metrics, Stakeholders,
+  Scope, Timeline.
+- **[Meeting Notes](https://github.com/agile-orchestrator/tulip-churn/wiki/Meeting-Notes)**: stakeholder sessions (for example
+  "Q4 Goals with the PO") where goals are agreed.
 - If `$ARGUMENTS` is a URL or page name, read that page. If it is free text, find the
-  matching goal in Notion. If nothing matches, say so and ask; do not invent a goal.
+  matching goal in the wiki. If nothing matches, say so and ask; do not invent a goal.
 
 Also run `gh issue list --label epic --state all` so you do not duplicate an existing epic.
 
@@ -73,7 +74,7 @@ Wait for the user's OK before creating anything.
 
 Body headings follow `.github/ISSUE_TEMPLATE/epic.yml`: Business goal, Business outcome,
 Success metric (name, baseline, target), Leading indicator, Target date, Stakeholders,
-In scope / out of scope, Achievability notes, Risks and warnings, Open questions, Notion
+In scope / out of scope, Achievability notes, Risks and warnings, Open questions, Wiki
 link. Write the body to a file in the scratchpad directory.
 
 Title: `[Epic] ` followed by an outcome-focused name, as in the issue template.

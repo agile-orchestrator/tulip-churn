@@ -80,8 +80,8 @@ grep -rn "<old name or default>" CLAUDE.md .claude/ .github/
 - `.claude/skills/*/SKILL.md`, such as `create-pbi`, which sets the default Status
 - `.claude/commands/*.md`, such as `transcript-to-board` and `refine-pbi`
 - `.github/ISSUE_TEMPLATE/`, for labels and type
-- Notion DoR and DoD pages, if the change affects them. Propose the edit and do not change
-  Notion without the user's OK.
+- the wiki DoR and DoD pages, if the change affects them. Propose the edit and do not change
+  the wiki without the user's OK.
 
 Skills should look up option ids by name at run time, not hard-code them.
 
@@ -93,5 +93,5 @@ Report:
 - what changed on the board
 - the result of the snapshot diff
 - which files changed
-- anything left for the user: the board view, fields that need their input, and any Notion
+- anything left for the user: the board view, fields that need their input, and any wiki
   edits

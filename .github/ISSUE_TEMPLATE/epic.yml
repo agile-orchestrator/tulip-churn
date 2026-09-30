@@ -8,7 +8,7 @@ body:
     id: goal
     attributes:
       label: Business goal
-      description: Link to the goal in Notion (Project overview or meeting notes) and its SMART statement.
+      description: Link to the goal on the wiki (Project Overview or meeting notes) and its SMART statement.
     validations:
       required: true
   - type: textarea
@@ -57,7 +57,7 @@ body:
       label: Risks and warnings
       description: Soft SMART warnings and open questions, each marked blocking or non-blocking.
   - type: input
-    id: notion
+    id: wiki
     attributes:
-      label: Notion link
-      description: Link to the source meeting notes or spec.
+      label: Wiki link
+      description: Link to the source meeting notes or spec on the wiki.

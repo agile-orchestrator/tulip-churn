@@ -1,6 +1,6 @@
 ---
 name: sprint-planning
-description: Run a sprint planning meeting for the Tulip Churn board - review what is left from the previous sprint and what is Ready, surface deadlines and risks, size the sprint to the team's capacity, apply the agreed scope to the board and record the planning in Notion. Use when asked to run, start or continue a sprint planning, or to plan the next sprint.
+description: Run a sprint planning meeting for the Tulip Churn board - review what is left from the previous sprint and what is Ready, surface deadlines and risks, size the sprint to the team's capacity, apply the agreed scope to the board and record the planning on the wiki. Use when asked to run, start or continue a sprint planning, or to plan the next sprint.
 argument-hint: "[sprint name, e.g. Sprint 4]"
 ---
 
@@ -21,7 +21,7 @@ days left."
 - If it is ambiguous, ask the user before going further.
 - "Previous sprint" below means the sprint before the one being planned.
 
-Use the same sprint name in every message, board change and the Notion page.
+Use the same sprint name in every message, board change and the wiki page.
 
 ## 1. Gather the facts (before presenting anything)
 
@@ -45,10 +45,10 @@ Then **read the content, not just the fields.** Board fields alone miss deadline
   `gh issue view <n> --json title,body,comments,parent` (`--comments` and `--json` don't mix).
 - Search all issues and PRs for deadlines: dates, "deadline", "by <day>", "before", "pilot",
   "go-live", "Compliance".
-- Notion (the live "Tulip Bank — Churn Early-Warning" page, never the "(backup)" copy): the
-  **Project overview** (timeline) and the **Meeting notes** database, above all Stakeholder
-  meetings since the last planning and any with "Processed to backlog" unticked. Deadlines and
-  commitments are usually written there, not in issues.
+- The wiki: the [Project Overview](https://github.com/agile-orchestrator/tulip-churn/wiki/Project-Overview) (timeline) and the
+  [Meeting Notes](https://github.com/agile-orchestrator/tulip-churn/wiki/Meeting-Notes) index, above all stakeholder meetings since the last
+  planning and any not yet turned into backlog items. Deadlines and commitments are usually
+  written there, not in issues.
 - Check suspicious claims against the code. A metric that looks too good (AUC 1.0), or a user
   report that the scores look wrong, is a reason to read `features.py` and the API. Breaking
   "features must work at scoring time" (`CLAUDE.md`) is a P0 bug for the sprint.
@@ -134,19 +134,19 @@ SPR=$(fid Sprint)   # iteration id comes from the graphql query in step 1
 
 Verify with `gh project item-list` that the fields changed before reporting.
 
-## 6. Record in Notion
+## 6. Record on the wiki
 
-Create a page "Sprint N planning" in the Meeting notes database (Date, Attendees = GitHub
-handles, Processed to backlog = No). Its first line says which sprint is planned, its dates,
+Create a wiki page `Sprint-N-Planning` (see `Sprint-3-Planning` for the shape) and link it
+from `Meeting-Notes`. Its first line says which sprint is planned, its dates,
 and why (current sprint joined mid-way, or next sprint). Then: Context (team, deadline), Capacity,
 Sprint goal (proposed or confirmed), Sprint backlog table (#, item, pts, prio, status, note),
 Findings, Decisions (including items moved out and why), Follow-ups. Update it as decisions
-come in. For content with tables, rewrite the page with `replace_content`; `update_content`
-search strings often don't match tables after Notion re-formats them.
+come in. Edit the page in a clone of `agile-orchestrator/tulip-churn.wiki`, and ask the user
+before pushing to the wiki.
 
 ## 7. Close
 
 Give a summary table of the sprint (number, title, points, priority), the total against the
-capacity range, the order of work where it matters (dependencies), the link to the Notion
+capacity range, the order of work where it matters (dependencies), the link to the wiki
 page, and follow-ups: owners to assign, meeting notes to process with `/transcript-to-board`,
 items to refine for the next sprint, the next iteration to create.

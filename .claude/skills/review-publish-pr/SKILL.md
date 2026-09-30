@@ -25,8 +25,7 @@ gh pr list --head $BR --state all                # a PR may already exist
 cat .github/pull_request_template.md
 ```
 
-Read the **Definition of Done** (Notion page under "Tulip Bank — Churn Early-Warning", or the
-GitHub Wiki once migrated). Do not use the "(backup)" copy.
+Read the **[Definition of Done](https://github.com/agile-orchestrator/tulip-churn/wiki/Definition-of-Done)** on the wiki.
 
 If there is uncommitted work, ask whether it belongs in the PR before going on.
 

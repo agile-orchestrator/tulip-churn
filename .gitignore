@@ -9,3 +9,6 @@ data/raw/*
 models/*
 !models/.gitkeep
 .env
+
+# Wiki is a separate git repository
+*.wiki/
