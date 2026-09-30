@@ -10,12 +10,7 @@ without the user's OK for that change.
 
 ## Single-PBI refinement
 
-When `$ARGUMENTS` identifies an issue, refine that item without listing the whole column:
-read its body, parent, comments, board fields, and the Definition of Ready, then begin at
-step 3. State whether it meets the In-refinement entry bar in `AGENTS.md`; if it does not,
-say which points are missing and propose keeping it in Backlog with `needs-refinement`.
-If it is vague or too large, propose smaller PBIs with user stories and Given/When/Then
-acceptance criteria. Do not edit or create issues without the user's OK.
+When `$ARGUMENTS` identifies an issue, read the [single-PBI refinement workflow](references/refine-pbi.md).
 
 ## 1. List the items
 

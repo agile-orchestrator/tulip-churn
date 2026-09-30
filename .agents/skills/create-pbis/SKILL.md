@@ -11,17 +11,7 @@ single batched confirmation. Never create issues with `gh issue create` alone.
 ## Meeting-transcript mode
 
 When `$ARGUMENTS` is a wiki page, URL, or pasted meeting transcript rather than a feature
-number, read it and extract decisions, requests, and open questions. Check the board for
-duplicates or existing items to update. Propose the appropriate epic, features, and PBIs,
-following the hierarchy and entry-bar rules in `AGENTS.md` and the Definition of Ready.
-Show the proposed hierarchy and every candidate item in a table before creating anything.
-
-After the user confirms, create the approved issues with `create-epic`, `create-features`,
-and `create-pbi` as applicable; link them as sub-issues and set each PBI to In refinement
-only when it meets the entry bar, otherwise Backlog with `needs-refinement`. Report each
-created issue's number, title, and status. If the transcript is a wiki page, propose updating
-its “Processed to backlog” field with the created issue numbers; update and push the wiki
-only after the user agrees.
+number, read the [transcript-to-board workflow](references/transcript-to-board.md).
 
 ## 1. Read the context
 
