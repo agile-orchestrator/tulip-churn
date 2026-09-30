@@ -37,3 +37,12 @@ def test_data_path_can_be_overridden(monkeypatch, raw_df, tmp_path):
     raw_df.head(100).to_csv(csv, index=False)
     monkeypatch.setenv("TULIP_DATA_PATH", str(csv))
     assert len(load_data()) == 100
+
+
+def test_split_stratified_maintains_churn_rate_tightly(raw_csv):
+    """Stratified split should maintain very close churn rates in train and test."""
+    df = load_data(raw_csv)
+    train, test = split(df, seed=42)
+    # With stratification, churn rates should be very close (within rounding)
+    # Much tighter than the original 0.02 tolerance
+    assert abs(train["Exited"].mean() - test["Exited"].mean()) < 0.001
