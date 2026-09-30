@@ -121,3 +121,11 @@ gh api repos/agile-orchestrator/tulip-churn/issues/<parent>/sub_issues -X POST \
 ```
 
 Custom slash commands for common scrum tasks are in `.claude/commands/`.
+
+## Presentation log
+
+We are preparing a talk on using an AI harness for the scrum lifecycle. After any scrum
+operation that goes through the connectors (GitHub board, Notion, Slack, Gmail, Chrome) — e.g.
+creating or moving items, refinement, sprint planning, reviews, setup — add a short bullet to
+`docs/ai-harness-scrum-log.md` under today's date: what was asked, what the harness did, which
+connectors, and any lesson or miss. Keep it factual and never log secrets.
