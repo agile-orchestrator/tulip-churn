@@ -4,4 +4,6 @@ description: Draft business-facing release notes from Tulip Churn changes merged
 argument-hint: <tag or date>
 ---
 
-Read the [release-notes workflow](references/release-notes.md) before drafting the notes.
+Draft release notes for changes merged since `$ARGUMENTS`. Group them by epic or feature,
+write for the Retention team and Product Owner, and list known issues. Offer to publish the
+approved notes as a wiki page; do not publish to the wiki without the user's agreement.
