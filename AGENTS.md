@@ -120,7 +120,11 @@ gh api repos/agile-orchestrator/tulip-churn/issues/<parent>/sub_issues -X POST \
   -F sub_issue_id=$(gh api repos/agile-orchestrator/tulip-churn/issues/<child> --jq .id)
 ```
 
-Custom commands/skills for common scrum tasks are in `.agents/skills/`.
+Custom commands/skills for common scrum tasks are in `.agents/skills/`, the harness-neutral
+location that Codex and other agents read. Claude Code only loads project skills from
+`.claude/skills/`, so that path is a symlink to `../.agents/skills` (like `CLAUDE.md` →
+`AGENTS.md`). Add or edit skills in `.agents/skills/` and never replace the symlink with a
+real folder. `/setup` checks the link.
 
 ## Presentation log
 
