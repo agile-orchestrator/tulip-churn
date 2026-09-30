@@ -221,3 +221,23 @@ operation: what was asked, what the harness did, which connectors, and what was 
   comparison module, tests, report and xgboost dependency) and the branch was force-pushed.
   PR #58 was closed, and #11 went back to In progress so the PO can rerun the task with the new
   hook.
+
+### #11 rerun — with the slopguard commit hook active
+- Rebuilt `compare.py`, `tests/test_compare.py` and `reports/model_comparison.md` from scratch
+  on `feat/11-improve-model`, this time with the `PreToolUse` `git commit` hook live. Two
+  commits (`ed388d4`, `8621bb5`); **slopguard did not block either one**, this time because it
+  genuinely ran (verified: the hook's `jq` payload strips `stop_hook_active` and it fires on
+  every commit, not just at Stop). *Connectors:* gh CLI, git.
+- **Reproducibility gap found during the rerun, not a slopguard finding.** `GradientBoostingClassifier`
+  and `XGBClassifier` had no `random_state`, so results drifted run to run. Two runs of the new
+  module gave XGBoost 0.799 ROC AUC once and 0.762 the next — a 0.037 swing, close to the 0.05
+  leakage-investigation threshold the PBI itself sets. Seeded both estimators; the report is now
+  stable across runs. The pick (gradient boosting) does not change either way.
+  *Lesson:* an unseeded non-deterministic model is a correctness bug a lint/complexity guard
+  like slopguard cannot see — worth a manual re-run check, not just one green run, before trusting
+  a comparison's numbers.
+- **Wiki.** ADR-002 refreshed with the reproducible numbers and moved from "Proposed" to
+  "Accepted", pushed directly to `tulip-churn.wiki` (`gh auth setup-git` was needed again to
+  push over https). *Connectors:* git / gh CLI.
+- **PR.** Opened PR #61 (replaces the closed #58) with theunis as reviewer, same rationale as
+  before. #11 moved to In review. *Connectors:* gh CLI (Projects).
