@@ -199,3 +199,8 @@ operation: what was asked, what the harness did, which connectors, and what was 
 - **PR.** Opened via `/review-publish-pr` with theunis as reviewer (author of #47 and assignee
   of #10, where the chosen model gets wired into `train.py`). #11 moved to In review.
   *Connectors:* gh CLI.
+- **Findings logged (`log-finding`).** #59 "Enforce type hints with ruff ANN rules" (PBI, P3,
+  Backlog + `needs-refinement`): `ruff --select ANN` finds 33 missing hints. Too big for the
+  fast path, and enabling a lint rule is a team decision. The broken wiki-push instruction was
+  fixed in the repo: PR #60 (`chore/wiki-push-credentials`, `/setup` runs `gh auth setup-git`),
+  with AdamAlansary as reviewer. *Connectors:* gh CLI (issues, Projects).
