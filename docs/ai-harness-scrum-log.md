@@ -76,3 +76,10 @@ operation: what was asked, what the harness did, which connectors, and what was 
 - *Miss:* Claude first answered from a stale local `main` (still pointing to Notion) and its
   push was rejected; PR #40 had already moved the docs to the wiki. Lesson: pull before
   changing setup files.
+
+### Project setup — squash merge only, `/setup` without Notion
+- The PO asked to make squash the only merge method: Claude disabled merge commits and rebase
+  merges on the repo (`gh repo edit`) and added a "Merging" rule to `CLAUDE.md` (PR titles are
+  Conventional Commits, since they become the squash commit). *Connectors:* gh CLI.
+- Removed Notion from `/setup` and the README: after the wiki migration (#24) `.mcp.json` has no
+  Notion server, so `/setup` was still sending newcomers to log in to a tool nobody uses.

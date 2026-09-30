@@ -98,6 +98,9 @@ from another feature or chore branch.
 request a reviewer (a collaborator other than the author, picked as in the `log-finding`
 skill), and move the item to **In review**. `/review-publish-pr` reviews the branch and does
 all of this.
+**Merging:** squash merge only (the repo allows no merge commits or rebase merges), so each PR
+lands on `main` as one commit. Give the PR a Conventional Commit title, since it becomes that
+commit's message: `gh pr merge <n> --squash`.
 
 ## Board operations with the gh CLI
 

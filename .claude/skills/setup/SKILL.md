@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Take a newcomer who has Claude Code and a clone of this repo to a working environment. Checks gh, uv, GitHub login and project access, uv sync and the connectors the team uses (GitHub, Notion, Slack, optionally Gmail), fixes what it safely can and says exactly what the user still has to do. Safe to run again at any time. Use when asked to set up, onboard or check the dev environment.
+description: Take a newcomer who has Claude Code and a clone of this repo to a working environment. Checks gh, uv, GitHub login and project access, uv sync, the local clone of the GitHub Wiki and the connectors the team uses (GitHub, Slack, optionally Gmail), fixes what it safely can and says exactly what the user still has to do. Safe to run again at any time. Use when asked to set up, onboard or check the dev environment.
 ---
 
 # Set up the tulip-churn environment
@@ -84,15 +84,14 @@ claude mcp list
 | Service | Used for | Connected when |
 |---|---|---|
 | GitHub | board, issues, PRs | step 2 passed (the team uses the `gh` CLI, not an MCP connector) |
-| Notion | Definition of Ready, Definition of Done and the other docs (until they move to the GitHub Wiki, #24) | the `notion` line (from `.mcp.json`) or a `claude.ai Notion` line shows `✔ Connected` |
 | Slack | team chat (workspace AgileOrchestrators) | a `claude.ai Slack` line shows `✔ Connected` |
 | Gmail (optional) | the PO's personal tools only | a `claude.ai Gmail` line shows `✔ Connected` |
 
 Also list every server in `.mcp.json` with its status from `claude mcp list`, so this report
 stays in sync with the repo config.
 
-For a missing Notion connector, tell the user to run `/mcp`, pick `notion` and log in with the
-account that has access to the **Tulip Bank** workspace (ask the PO for an invite if needed).
+Notion is no longer needed: the docs moved to the GitHub Wiki (#24), which step 4 clones. Do
+not report a missing Notion connector.
 
 For a missing Gmail or Slack connector, give these steps:
 
@@ -119,7 +118,6 @@ End with one table, one row per check, and nothing else changed:
 | Project access | ✅ Tulip Churn Board | — |
 | uv sync | ✅ | — |
 | Wiki clone | ✅ `../tulip-churn.wiki` | — |
-| Notion | ⚠️ needs authentication | `/mcp`, then log in to `notion` |
 | Slack | ✅ | — |
 | Gmail (optional) | — not needed | — |
 
