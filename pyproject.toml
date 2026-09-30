@@ -23,6 +23,7 @@ dev = [
     "ipykernel>=6.29",
     "matplotlib>=3.9",
     "slopguard",
+    "xgboost-cpu>=3.2.0",
 ]
 
 [build-system]
