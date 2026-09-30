@@ -65,3 +65,12 @@ operation: what was asked, what the harness did, which connectors, and what was 
 - **Asking a teammate for review on Slack**, then handling the review comments one by one:
   removed hard-coded values, and after discussion moved a personal-only skill out of the shared
   repo, with a PR comment explaining the architectural reason. *Connectors:* Slack, gh CLI.
+
+## 2026-09-30
+
+### Project setup — GitHub Wiki
+- Asked whether Claude can read the GitHub Wiki: it cloned `tulip-churn.wiki.git` and read all
+  14 pages. Cloned it locally at `../tulip-churn.wiki` and recorded the location and the "separate
+  repo, no PRs" rules in `CLAUDE.md` and the `project-setup` skill. *Lesson:* the wiki is a
+  separate git repo, so doc changes cannot ride in the code PR; CLAUDE.md and several skills
+  still point to Notion for DoR/DoD. *Connectors:* gh CLI / git.

@@ -82,6 +82,11 @@ grep -rn "<old name or default>" CLAUDE.md .claude/ .github/
 - `.github/ISSUE_TEMPLATE/`, for labels and type
 - Notion DoR and DoD pages, if the change affects them. Propose the edit and do not change
   Notion without the user's OK.
+- The GitHub Wiki pages (`Definition-of-Ready.md`, `Definition-of-Done.md`, `How-We-Work.md`),
+  in the local clone at `../tulip-churn.wiki`. If it is missing, clone it:
+  `git clone https://github.com/agile-orchestrator/tulip-churn.wiki.git ../tulip-churn.wiki`.
+  Pull first. The wiki is a separate repo with no PRs, so a push goes live at once: propose
+  the edit and push only with the user's OK.
 
 Skills should look up option ids by name at run time, not hard-code them.
 

@@ -1,7 +1,7 @@
 ---
 name: review-publish-pr
 description: Review the work on a PBI branch against the issue's acceptance criteria and the Definition of Done, then push the branch, open the PR from the template linked to the issue and move the item to In review. Use when asked to review a finished PBI, check that everything is done, or push and open the PR for the current branch.
-argument-hint: [issue number, defaults to the one in the branch name]
+argument-hint: issue number, defaults to the one in the branch name
 ---
 
 Review the current branch for the issue in `$ARGUMENTS` (or the number in the branch name,
