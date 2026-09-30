@@ -145,3 +145,13 @@ operation: what was asked, what the harness did, which connectors, and what was 
   opened PR #51 from the template (no issue: team tooling under #28) and requested AdamAlansary
   as reviewer, the only other collaborator who committed to the touched paths. Lint and tests
   green. *Connectors:* gh CLI.
+
+### Project setup — Slack MCP server
+- Added a project-level Slack MCP server (`@modelcontextprotocol/server-slack`) to `.mcp.json`,
+  with the bot token read from `${SLACK_BOT_TOKEN}` (kept in the gitignored `.env`).
+  *Connectors:* Slack.
+- *Miss:* the first call failed with `invalid_auth`: Claude Code does not read `.env`, so the
+  variable was empty. Lesson: export `.env` into the shell before starting Claude Code. After a
+  restart the bot listed the workspace channels; it is a member of #tulip-churn and #tasks.
+- The PO asked for a test DM: Claude looked up the PO's Slack user ID and posted to it; the bot
+  opened a DM channel on its own, so `chat:write` alone is enough for DMs. *Connectors:* Slack.
