@@ -158,3 +158,6 @@ operation: what was asked, what the harness did, which connectors, and what was 
   cleared, `sprint-3` label removed). *Connectors:* gh CLI.
 - *Miss:* Claude first said #12 had no parent; `gh project item-list` does not show parents, and
   the sub-issues API showed #3. Lesson: check the parent via the issues API, not the board.
+- The PO skipped the rest of the #12 refinement (open: precision floor, threshold, fate of #11).
+  Board fix: #35 moved from In review to In progress, since PR #41 was only "Part of #35" and
+  the notebook re-run is still open. *Connectors:* gh CLI.
