@@ -119,3 +119,7 @@ operation: what was asked, what the harness did, which connectors, and what was 
   comment shows the team confirmed it at planning. Claude corrected the board and added a
   rule to the skill: check who did something before saying so. Also, moving the Actions
   frame left its table behind: tables are not frame children.
+- **Commit and PR.** Claude committed the skill, the `/setup` and `AGENTS.md` changes and this
+  log on `chore/sprint-retrospective-skill`, opened PR #50 from the template (no issue: team
+  tooling under #28) and requested AdamAlansary as reviewer, the only other collaborator who
+  committed to the touched files. Lint and tests green. *Connectors:* gh CLI.
