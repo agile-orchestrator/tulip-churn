@@ -8,10 +8,10 @@ import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel
 
+from tulip_churn.evaluate import THRESHOLD
 from tulip_churn.features import FEATURES, add_features
 
 MODEL_PATH = "models/model.joblib"
-THRESHOLD = 0.5
 
 app = FastAPI(title="Tulip Bank churn scoring", version="0.1.0")
 
