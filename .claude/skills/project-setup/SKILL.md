@@ -80,8 +80,9 @@ grep -rn "<old name or default>" CLAUDE.md .claude/ .github/
 - `.claude/skills/*/SKILL.md`, such as `create-pbi`, which sets the default Status
 - `.claude/commands/*.md`, such as `transcript-to-board` and `refine-pbi`
 - `.github/ISSUE_TEMPLATE/`, for labels and type
-- the wiki DoR and DoD pages, if the change affects them. Propose the edit and do not change
-  the wiki without the user's OK.
+- the wiki DoR and DoD pages, if the change affects them, in the local clone
+  `../tulip-churn.wiki` (pull first). Propose the edit and do not push to the wiki without
+  the user's OK: it has no PRs, a push goes live at once.
 
 Skills should look up option ids by name at run time, not hard-code them.
 

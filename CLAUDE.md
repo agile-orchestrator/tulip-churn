@@ -17,24 +17,21 @@ Read the wiki **Definition of Ready** before creating or refining backlog items 
 
 ## Reading and editing the wiki
 
-**To read wiki pages** (GitHub has no wiki API):
-```bash
-# Read a wiki page via raw GitHub URL
-curl -s https://raw.githubusercontent.com/wiki/agile-orchestrator/tulip-churn/Definition-of-Ready.md
+The wiki is a separate git repo (`agile-orchestrator/tulip-churn.wiki`, branch `master`), not
+a folder of this one. Keep a local clone **next to** this repo at `../tulip-churn.wiki`, never
+inside it (`/setup` creates it). GitHub has no wiki API, so read and edit the local files:
 
-# Example: read DoR for a command
-curl -s https://raw.githubusercontent.com/wiki/agile-orchestrator/tulip-churn/Definition-of-Ready.md | grep -A 5 "PBI"
+```bash
+git -C ../tulip-churn.wiki pull                 # always pull before reading or editing
+cat ../tulip-churn.wiki/Definition-of-Ready.md
+# edit, then commit and push; there are no PRs, a push goes live at once
+git -C ../tulip-churn.wiki add -A
+git -C ../tulip-churn.wiki commit -m "docs: update wiki page"
+git -C ../tulip-churn.wiki push origin master
 ```
 
-**To edit wiki pages**, clone the wiki repository:
-```bash
-gh repo clone agile-orchestrator/tulip-churn.wiki
-cd tulip-churn.wiki
-# Make changes, commit, and push
-git add .
-git commit -m "docs: update wiki page"
-git push origin master
-```
+Wiki changes cannot go in the same PR as the code they describe: push them separately and
+mention them in the PR.
 
 ## Commands
 

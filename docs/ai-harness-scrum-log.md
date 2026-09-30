@@ -65,3 +65,14 @@ operation: what was asked, what the harness did, which connectors, and what was 
 - **Asking a teammate for review on Slack**, then handling the review comments one by one:
   removed hard-coded values, and after discussion moved a personal-only skill out of the shared
   repo, with a PR comment explaining the architectural reason. *Connectors:* Slack, gh CLI.
+
+## 2026-09-30
+
+### Project setup — local GitHub Wiki clone
+- Asked whether Claude can read the GitHub Wiki: it cloned `tulip-churn.wiki.git` and read all
+  14 pages. The PO then asked for a permanent local clone: Claude cloned it at
+  `../tulip-churn.wiki`, made `/setup` clone or pull it, and pointed `CLAUDE.md` and
+  `project-setup` at the clone instead of raw URLs. *Connectors:* gh CLI / git.
+- *Miss:* Claude first answered from a stale local `main` (still pointing to Notion) and its
+  push was rejected; PR #40 had already moved the docs to the wiki. Lesson: pull before
+  changing setup files.

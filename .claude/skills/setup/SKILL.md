@@ -13,7 +13,7 @@ Rules:
 - **Never ask for, type, print or store a token, password or secret.** Logins and OAuth flows
   are done by the user. Ask them to run the command themselves with the `!` prefix (for
   example `! gh auth login`) so the output lands in this session, then check again.
-- Only fix things that need no login and no admin rights (for now only `uv sync`). For
+- Only fix things that need no login and no admin rights (`uv sync` and the wiki clone). For
   anything else give the exact command or steps, and do not run installers with `sudo` or
   `curl | sh` yourself.
 - A failed check does not stop the run. Carry on and report everything at the end.
@@ -55,7 +55,25 @@ uv run python -c "import tulip_churn"
 Run `uv sync` yourself: it only installs into `.venv/` and changes nothing when everything is
 already installed. If it fails, show the error and stop this step.
 
-## 4. Connectors
+## 4. Wiki clone
+
+The docs (Definition of Ready, Definition of Done, ADRs, meeting notes) are in the GitHub Wiki,
+a separate git repo. It is cloned next to this repo, never inside it:
+
+```bash
+if [ -d ../tulip-churn.wiki/.git ]; then
+  git -C ../tulip-churn.wiki pull --ff-only
+else
+  git clone https://github.com/agile-orchestrator/tulip-churn.wiki.git ../tulip-churn.wiki
+fi
+ls ../tulip-churn.wiki/Definition-of-Ready.md
+```
+
+Run it yourself. The check passes when `Definition-of-Ready.md` exists. If the pull fails
+because of local changes in the wiki clone, do not touch them: report it and let the user
+commit or discard them.
+
+## 5. Connectors
 
 Check what this Claude Code session can reach:
 
@@ -88,7 +106,7 @@ For a missing Gmail or Slack connector, give these steps:
 Gmail is only needed by the PO. For anyone else, report a missing Gmail as "not needed", not
 as a failure.
 
-## 5. Report
+## 6. Report
 
 End with one table, one row per check, and nothing else changed:
 
@@ -100,6 +118,7 @@ End with one table, one row per check, and nothing else changed:
 | Repo access | ✅ | — |
 | Project access | ✅ Tulip Churn Board | — |
 | uv sync | ✅ | — |
+| Wiki clone | ✅ `../tulip-churn.wiki` | — |
 | Notion | ⚠️ needs authentication | `/mcp`, then log in to `notion` |
 | Slack | ✅ | — |
 | Gmail (optional) | — not needed | — |
