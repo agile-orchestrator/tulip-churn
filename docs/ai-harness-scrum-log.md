@@ -86,3 +86,40 @@ operation: what was asked, what the harness did, which connectors, and what was 
 - Turned on "Automatically delete head branches" on the repo. Found 8 merged branches to clean
   up (branch head equal to the merged PR head); auto mode blocked deleting remote
   branches as destructive; the PO switched auto mode off and approved the delete. *Connectors:* gh CLI.
+
+### Project setup — Miro connector and a retrospective skill
+- Asked to connect the Miro MCP: the `claude.ai Miro` connector needs an OAuth login that
+  Claude cannot start from the terminal, so the PO ran `/mcp` and logged in. Claude then
+  checked the connection (user and team ids, no boards yet). *Connectors:* Miro.
+- Asked for a skill to set up the sprint retrospective, on Miro. Claude read the board, the
+  Sprint field iterations, the merged PRs, CI runs and the wiki (How We Work, Sprint 3
+  Planning), loaded Miro's board-authoring format, and wrote `sprint-retrospective`: it
+  gathers team-level sprint facts, builds the retro board in Miro, turns agreed actions into
+  PBIs or working agreements, and records the retro on the wiki. `/setup` now checks the Miro
+  connector. *Connectors:* gh CLI, Miro, wiki (git).
+- *Lesson:* Miro's own rules ask for confirmation before creating or sharing a board, and the
+  skill keeps those steps behind the facilitator's OK.
+- **First run of `sprint-retrospective` (Sprint 3, snapshot on day 3).** Claude gathered the
+  sprint's facts (6 committed items, 16 of 29 pts done, 8 merged PRs, 1 red run on `main`,
+  2 reopened items, 2 logged harness misses), asked the PO for format, facts, location and
+  sharing, then created the Miro board *Tulip Churn Sprint 3 Retro* with four frames: numbers,
+  check-in, went well / to improve / try next, actions. Not shared yet. *Connectors:* gh CLI,
+  Miro, wiki (git).
+- *Lesson:* the first layout needed two fix-up passes (a table wider than authored, countdown
+  buttons off their spot, a frame that would not shrink before its children moved). Claude
+  wrote these into the skill. It also dropped "save `result_svg` in the scratchpad": the
+  wrap-up runs in a later session, where the scratchpad is gone.
+- **Talking points.** The PO asked for challenging talking points on the board and in the
+  skill. Claude checked the facts behind them (19 of 28 commits on `main` since Sep 28 had
+  no PR; #46 lists "which model is live?" as a blocking question) and added a *Talking points*
+  frame with six cards: over-commitment, priority vs order of work, fixed in code vs in
+  production, done vs reopened, review practice, pilot requirements vs tooling work. The
+  skill now has a step to draft them. *Connectors:* gh CLI, Miro.
+- *Miss:* the first board version blamed #24's early close on the AI tooling. The issue
+  comment shows the team confirmed it at planning. Claude corrected the board and added a
+  rule to the skill: check who did something before saying so. Also, moving the Actions
+  frame left its table behind: tables are not frame children.
+- **Commit and PR.** Claude committed the skill, the `/setup` and `AGENTS.md` changes and this
+  log on `chore/sprint-retrospective-skill`, opened PR #50 from the template (no issue: team
+  tooling under #28) and requested AdamAlansary as reviewer, the only other collaborator who
+  committed to the touched files. Lint and tests green. *Connectors:* gh CLI.
