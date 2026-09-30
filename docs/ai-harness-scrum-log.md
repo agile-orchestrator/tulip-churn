@@ -145,3 +145,11 @@ operation: what was asked, what the harness did, which connectors, and what was 
   opened PR #51 from the template (no issue: team tooling under #28) and requested AdamAlansary
   as reviewer, the only other collaborator who committed to the touched paths. Lint and tests
   green. *Connectors:* gh CLI.
+- **Skills missing in Claude Code.** The user asked why the `.agents/skills` skills were not
+  available. Claude traced it to the `.claude` → `.agents` rename (68b2300): Claude Code only
+  loads project skills from `.claude/skills/`, and only `CLAUDE.md` had been symlinked. It
+  added `.claude/skills` → `../.agents/skills`, documented it in `AGENTS.md`, made `/setup`
+  check and repair both links, added the missing frontmatter to `work-on-pbi`, and opened PR
+  #57 with AdamAlansary (author of the rename) as reviewer. *Connectors:* gh CLI. *Lesson:*
+  keeping one harness-neutral folder needs a per-harness link, and a setup check so it does
+  not silently break.
