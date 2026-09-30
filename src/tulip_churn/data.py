@@ -27,4 +27,4 @@ def load_data(path: str = DATA_PATH) -> pd.DataFrame:
 
 
 def split(df: pd.DataFrame, test_size: float = 0.2, seed: int | None = None):
-    return train_test_split(df, test_size=test_size, random_state=seed)
+    return train_test_split(df, test_size=test_size, random_state=seed, stratify=df[TARGET])
