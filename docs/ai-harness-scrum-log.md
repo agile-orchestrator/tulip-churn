@@ -145,3 +145,16 @@ operation: what was asked, what the harness did, which connectors, and what was 
   opened PR #51 from the template (no issue: team tooling under #28) and requested AdamAlansary
   as reviewer, the only other collaborator who committed to the touched paths. Lint and tests
   green. *Connectors:* gh CLI.
+
+### Sprint 3 status and refinement of #12
+- Asked "what else is needed to finish Sprint 3": Claude read the board, the open PRs and the
+  wiki Sprint-3-Planning page. 16 of 31 points in the sprint were done; the rest sat in review
+  (#20 PR #49 no review yet, #10 PR #47 with merge conflicts, #14 PR #23 with changes
+  requested) plus #12 not started. *Connectors:* gh CLI, wiki (git).
+- Refined #12 against the DoR: no Given/When/Then criteria, "ADR in Notion" stale after the
+  wiki migration, no metric baseline (found in PR #38: AUC 0.795, precision 0.610, recall
+  0.298), and a hidden blocker on #10 (`train.py` is still a stub). It was also in Sprint 3
+  although the planning page never committed it. The PO removed it from Sprint 3 (Sprint field
+  cleared, `sprint-3` label removed). *Connectors:* gh CLI.
+- *Miss:* Claude first said #12 had no parent; `gh project item-list` does not show parents, and
+  the sub-issues API showed #3. Lesson: check the parent via the issues API, not the board.
