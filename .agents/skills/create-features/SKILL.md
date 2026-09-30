@@ -78,4 +78,4 @@ a loop: say what is missing and that the issue exists without board fields.
 
 Check each issue's type, labels and parent (`gh api .../issues/<n>/parent`). Report the
 URLs, the table with issue numbers, warnings and open questions, and which board fields
-were or were not set. Suggest `create-pbis` for each feature as the next step.
+were or were not set. Suggest the Feature-decomposition mode of `create-pbi` for each feature as the next step.

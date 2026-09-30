@@ -1,12 +1,9 @@
----
-name: create-pbis
-description: Break a Feature into several PBIs, or turn a meeting transcript into proposed backlog items, with the correct hierarchy, labels and board fields. Use when asked to create or split PBIs, or process a meeting transcript into backlog work. For a single PBI use create-pbi.
-argument-hint: <feature issue number>
----
+## Create PBIs from a Feature
 
-Decompose the Feature `#$ARGUMENTS` into PBIs. Creating each PBI follows the `create-pbi`
-skill (template, type, parent link, board fields); this skill adds the decomposition and a
-single batched confirmation. Never create issues with `gh issue create` alone.
+Decompose the Feature `#$ARGUMENTS` into PBIs. For the shared issue-creation rules,
+including templates, type, parent links, labels, and board fields, read the
+[single-PBI workflow](create-single-pbi.md). This workflow adds decomposition and a single
+batched confirmation. Never create issues with `gh issue create` alone.
 
 ## Meeting-transcript mode
 
@@ -55,7 +52,8 @@ open question marked **blocking** or **non-blocking**. Never invent content.
   questions, estimate, priority P0-P3.
 
 Check each proposed PBI against the **entry bar for In refinement** in `CLAUDE.md` and the
-full DoR checklist, as `create-pbi` step 2 does. Do not invent content to pass either.
+full DoR checklist, as the [single-PBI workflow](create-single-pbi.md) does. Do not invent
+content to pass either.
 
 - **Meets the entry bar:** Status **In refinement**. Add `needs-refinement` too if other DoR
   items are still open (blocking question, unknown metric, no estimate).
@@ -69,10 +67,10 @@ Wait for the user to approve, edit or drop items, once for the whole batch.
 
 ## 4. Create
 
-For each approved PBI, in dependency order, follow `create-pbi` step 4: write the body to a
-file in the scratchpad directory, create the issue, set type = Task, link it as a
+For each approved PBI, in dependency order, follow the [single-PBI workflow](create-single-pbi.md):
+write the body to a file in the scratchpad directory, create the issue, set type = Task, link it as a
 sub-issue of the feature, add it to project 1, and set Status (**In refinement**, or
-**Backlog** for parked items; look the option up by name as `create-pbi` does), Story
+**Backlog** for parked items; look the option up by name as the [single-PBI workflow](create-single-pbi.md) does), Story
 Points, Priority (and Sprint only if the user names one). Labels: always `pbi`; an area label if
 one fits (`api`, `model`, `data`, `docs`, `ci`); `needs-refinement` where applicable. Only
 set Status **Ready** if the user asks and every DoR item is met.
@@ -84,7 +82,7 @@ fields.
 
 ## 5. Verify and report
 
-For each issue check type, labels, parent and board fields as `create-pbi` step 5 does. A
+For each issue check type, labels, parent and board fields as the [single-PBI workflow](create-single-pbi.md) does. A
 Status of `null` means the edit failed: fix it before reporting. Report the URLs in a table with estimate,
 priority, DoR result and board fields set, the total points, and any open questions and
 `needs-refinement` items.
