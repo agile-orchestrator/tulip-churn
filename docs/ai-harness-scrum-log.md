@@ -171,3 +171,6 @@ operation: what was asked, what the harness did, which connectors, and what was 
 - *Lesson:* the GraphQL `closingIssuesReferences` of PR #52 stayed empty after adding
   `Closes #53`, and it is empty for older PRs too, yet `Closes #24` in PR #40 did close #24 on
   merge. That field is no proof of the link here; the issue timeline is.
+- **Review ping.** The PO asked to ping the reviewer on Slack if the review was still pending:
+  Claude checked PR #52 (no review yet) and sent Theun a DM from Tulip Churn Bot with the
+  link and the open question. *Connectors:* gh CLI, Slack.
