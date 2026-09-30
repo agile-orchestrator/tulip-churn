@@ -155,3 +155,8 @@ operation: what was asked, what the harness did, which connectors, and what was 
   restart the bot listed the workspace channels; it is a member of #tulip-churn and #tasks.
 - The PO asked for a test DM: Claude looked up the PO's Slack user ID and posted to it; the bot
   opened a DM channel on its own, so `chat:write` alone is enough for DMs. *Connectors:* Slack.
+- **Commit and PR.** Claude moved the local changes onto `chore/slack-mcp` from `origin/main`
+  (the local `main` was 4 commits behind; the log conflicted and both sides were kept), made the
+  bot an optional check in `/setup`, opened PR #52 and requested theunis as reviewer. The PR
+  flags that the per-user `claude.ai Slack` connector already exists and the bot needs a shared
+  token. *Connectors:* gh CLI.
