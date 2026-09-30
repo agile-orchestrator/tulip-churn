@@ -51,7 +51,7 @@ exclude = ["notebooks/*"]
 allow_suppression_comments = false
 max_findings = 10
 on_missing_tool = "error"
-instructions_to_claude_on_block = "Fix by refactoring: split long or branchy functions into small named helpers in the same module, and group many arguments into a dataclass. Never add # noqa. If a fix needs a design decision, say so instead of forcing it."
+instructions_to_claude_on_block = "Fix by refactoring: split long or branchy functions into small named helpers in the same module, and group many arguments into a dataclass. Never add # noqa. If you find no satisfactory way to refactor, stop and discuss a plan and possible approaches with the engineer instead of forcing a fix."
 
 [tool.slopguard.edit]
 enabled = true
