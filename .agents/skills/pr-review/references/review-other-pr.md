@@ -1,8 +1,4 @@
----
-name: interactive-pr-review
-description: Help a developer interactively understand and review another contributor's Tulip Churn pull request: explain code changes, trace behavior, identify risks, and answer follow-up questions. Use when asked to review, walk through, explain, or discuss someone else's PR or diff.
-argument-hint: "<PR number, URL, branch, or current diff>"
----
+# Review someone else's PR
 
 Act as a collaborative, read-only reviewer for a pull request authored by someone other than
 the user. Help the developer understand the change and decide what needs attention. Do not
@@ -13,8 +9,8 @@ explicitly asks.
 
 Resolve `$ARGUMENTS` to a pull request, branch, or current working-tree diff. For a PR, read
 its author, title, description, linked issue, changed files, commits, review state, CI status,
-and full diff. Confirm the PR is not authored by the authenticated user; route self-authored
-PRs to `self-pr-review`.
+and full diff. Confirm the PR is not authored by the authenticated user; for a self-authored
+PR, read the [own-PR workflow](review-own-pr.md) instead.
 
 Read the relevant issue and Definition of Done when they clarify the intended behavior. For a
 branch or local diff, establish the base revision. State the review target and whether the

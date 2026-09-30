@@ -1,8 +1,4 @@
----
-name: self-pr-review
-description: Review a developer's own Tulip Churn pull request, identify issues or gaps, and draft or post approved PR comments about them. Use when asked to self-review a PR, add review comments to one's own PR, or check a PR before requesting review.
-argument-hint: "<own PR number, URL, branch, or current diff>"
----
+# Review your own PR
 
 Help a developer improve their own pull request before external review. Focus on defects,
 mistakes, missing tests, unclear behavior, requirement gaps, and risks. Do not approve, merge,
@@ -12,7 +8,7 @@ or alter code. Post comments only after the user approves the exact proposed com
 
 Resolve `$ARGUMENTS` to a pull request, branch, or local diff. For a PR, identify the
 authenticated GitHub user and confirm they are the PR author. If another person authored it,
-route to `interactive-pr-review`.
+read the [other-contributor workflow](review-other-pr.md) instead.
 
 Read the PR description, linked issue, diff, changed files, commits, CI status, existing review
 comments, and relevant Definition of Done. Treat the merged-base comparison and current code as
