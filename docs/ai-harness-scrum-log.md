@@ -166,3 +166,36 @@ operation: what was asked, what the harness did, which connectors, and what was 
   places. Following `log-finding`, Claude created #55 (PBI, `data`, P3, parent #3), fixed it on
   `chore/55-use-target-constant` and opened PR #56 with theunis as reviewer (last committer to
   `data.py` and the tests); #55 is In review with no sprint. *Connectors:* gh CLI.
+
+### Working on #11 while the PO was away
+- **Asked:** "work on the model improvement (current branch), log slopguard feedback, see you
+  for the PR". Claude planned first (plan mode). #11 did not meet the Definition of Ready and
+  duplicated #12. Training lives in the notebook, and #10's PR #47 is still open. The PO
+  approved the plan. *Connectors:* gh CLI, wiki (git).
+- **Refinement by the harness.** Claude rewrote #11 as "Compare candidate churn models and pick
+  the best ranker": story, 4 Given/When/Then criteria, named metric (precision in the top 10%,
+  because Retention calls the top ~500 each week), 5 SP, Sprint 3, In progress. It removed
+  `needs-refinement` and closed #12 as a duplicate. #11 was already a sub-issue of #3.
+  *Connectors:* gh CLI (issues API, Projects).
+- **Result: no model change.** `tulip_churn.compare` runs 5 candidates on the same folds.
+  Gradient boosting (current) 0.801 AUC / 0.611 top-10% precision, XGBoost 0.799 / 0.603,
+  logistic regression 0.757. The synthetic data comes from a known formula, whose own score is
+  0.810 / 0.628. So the current model is within about 1 point of the best any model can do.
+  ADR-002 (wiki) keeps gradient boosting. Better results need new signal (#36), not a new
+  algorithm.
+- *Lesson:* "try XGBoost" was answered with a ceiling measurement instead of a model swap. An
+  improvement ticket should name the metric *and* check how much room is left before it is
+  estimated.
+- *Miss:* `xgboost` pulled a ~300 MB CUDA wheel (`nvidia-nccl`) on Linux. Claude switched to
+  `xgboost-cpu`, then made it a dev dependency, because XGBoost did not win.
+- *Miss:* the documented wiki push (`git push origin master`) failed: the wiki is cloned over
+  HTTPS and the gh CLI is set to SSH. It worked with
+  `git -c credential.helper='!gh auth git-credential' push`.
+- **slopguard feedback:** no blocks. `compare.py` was written as 13 small functions from the
+  start (complexity ≤ 4, ≤ 15 statements, ≤ 4 args, settings in a `CompareConfig` dataclass),
+  and a manual `slopguard hook stop` returned clean. The only lint hit was a ruff E501 (line
+  length) on one signature. *Observation:* slopguard did not flag the untyped fixtures in
+  `tests/conftest.py`, although the project rule wants type hints in `tests/`.
+- **PR.** Opened via `/review-publish-pr` with theunis as reviewer (author of #47 and assignee
+  of #10, where the chosen model gets wired into `train.py`). #11 moved to In review.
+  *Connectors:* gh CLI.
