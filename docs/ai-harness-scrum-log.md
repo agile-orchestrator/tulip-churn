@@ -141,3 +141,7 @@ operation: what was asked, what the harness did, which connectors, and what was 
 - *Lesson:* the dry run found a wrong rule in the first draft. "PR merged, issue open → Accept as
   Done" would have closed #35, whose PR says "Part of #35" with one criterion still open. The
   skill now reads the PR body and the open criteria first.
+- **Commit and PR.** Claude committed the skill and this log on `chore/sprint-close-skill`,
+  opened PR #51 from the template (no issue: team tooling under #28) and requested AdamAlansary
+  as reviewer, the only other collaborator who committed to the touched paths. Lint and tests
+  green. *Connectors:* gh CLI.
