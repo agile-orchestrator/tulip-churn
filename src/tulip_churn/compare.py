@@ -36,11 +36,13 @@ def candidates() -> dict[str, ClassifierMixin]:
         "logistic_regression_balanced": LogisticRegression(
             max_iter=1000, class_weight="balanced"
         ),
-        BASELINE_NAME: GradientBoostingClassifier(n_estimators=200, max_depth=3),
-        "hist_gradient_boosting_balanced": HistGradientBoostingClassifier(
-            class_weight="balanced"
+        BASELINE_NAME: GradientBoostingClassifier(
+            n_estimators=200, max_depth=3, random_state=SEED
         ),
-        "xgboost": XGBClassifier(eval_metric="logloss"),
+        "hist_gradient_boosting_balanced": HistGradientBoostingClassifier(
+            class_weight="balanced", random_state=SEED
+        ),
+        "xgboost": XGBClassifier(eval_metric="logloss", random_state=SEED),
     }
 
 
