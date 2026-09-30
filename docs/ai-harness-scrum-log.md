@@ -83,3 +83,6 @@ operation: what was asked, what the harness did, which connectors, and what was 
   Conventional Commits, since they become the squash commit). *Connectors:* gh CLI.
 - Removed Notion from `/setup` and the README: after the wiki migration (#24) `.mcp.json` has no
   Notion server, so `/setup` was still sending newcomers to log in to a tool nobody uses.
+- Turned on "Automatically delete head branches" on the repo. Found 8 merged branches to clean
+  up (branch head equal to the merged PR head); the harness's permission check blocked deleting
+  remote branches, so the PO ran the delete. *Connectors:* gh CLI.
