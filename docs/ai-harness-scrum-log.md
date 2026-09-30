@@ -123,3 +123,21 @@ operation: what was asked, what the harness did, which connectors, and what was 
   log on `chore/sprint-retrospective-skill`, opened PR #50 from the template (no issue: team
   tooling under #28) and requested AdamAlansary as reviewer, the only other collaborator who
   committed to the touched files. Lint and tests green. *Connectors:* gh CLI.
+
+### Project setup — a sprint close-out skill
+- Asked, through a grilling session, for a skill to end the current sprint. The PO chose
+  close-out only (no sprint review, the retro keeps its own skill), a walk through every ticket
+  with a decision per ticket (next sprint, product backlog, back to refinement, re-estimate,
+  split, accept as Done, drop), and a check of the sprint goal. The PO cut the questions short
+  ("just add to .agents/skills/"), so Claude took its own recommendations for the rest: run it
+  after the retro and before planning, keep sprint labels as history, and write an *Outcome*
+  section on the sprint's planning page. Claude wrote `sprint-close`. *Connectors:* gh CLI,
+  wiki (git).
+- **Dry run on Sprint 3 (day 3, read only).** Claude ran the skill's queries: 7 sprint items, 2
+  stray items (#8 still on Sprint 2, #35 In review without a sprint), 3 Done items with a
+  Definition of Done gap (#24 and #29 merged with changes requested, #34 merged without an
+  approval), sprint goal Partly met, no Sprint 4 iteration, no retro page yet. Nothing changed on
+  the board or the wiki. *Connectors:* gh CLI, wiki (git).
+- *Lesson:* the dry run found a wrong rule in the first draft. "PR merged, issue open → Accept as
+  Done" would have closed #35, whose PR says "Part of #35" with one criterion still open. The
+  skill now reads the PR body and the open criteria first.
