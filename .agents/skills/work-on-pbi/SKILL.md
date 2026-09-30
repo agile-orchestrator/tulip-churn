@@ -1,3 +1,9 @@
+---
+name: work-on-pbi
+description: Complete a Tulip Churn PBI end-to-end - read the issue, branch from origin/main, implement with tests, open a PR that meets the Definition of Done and move the item through the board. Use when asked to work on, implement, pick up or start a PBI or issue.
+argument-hint: <issue number>
+---
+
 # Work on a GitHub PBI (Product Backlog Item)
 
 **Skill**: Complete a PBI from the GitHub project board following agile best practices and the Definition of Done.

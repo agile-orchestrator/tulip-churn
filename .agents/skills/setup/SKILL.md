@@ -13,9 +13,9 @@ Rules:
 - **Never ask for, type, print or store a token, password or secret.** Logins and OAuth flows
   are done by the user. Ask them to run the command themselves with the `!` prefix (for
   example `! gh auth login`) so the output lands in this session, then check again.
-- Only fix things that need no login and no admin rights (`uv sync` and the wiki clone). For
-  anything else give the exact command or steps, and do not run installers with `sudo` or
-  `curl | sh` yourself.
+- Only fix things that need no login and no admin rights (`uv sync`, the wiki clone and the
+  agent links). For anything else give the exact command or steps, and do not run installers
+  with `sudo` or `curl | sh` yourself.
 - A failed check does not stop the run. Carry on and report everything at the end.
 
 ## 1. Tools
@@ -73,7 +73,30 @@ Run it yourself. The check passes when `Definition-of-Ready.md` exists. If the p
 because of local changes in the wiki clone, do not touch them: report it and let the user
 commit or discard them.
 
-## 5. Connectors
+## 5. Agent links
+
+The team's instructions and skills live in the harness-neutral `AGENTS.md` and
+`.agents/skills/`, so Codex and other agents read them too. Claude Code only looks for
+`CLAUDE.md` and `.claude/skills/`, so the repo ships both as symlinks:
+
+| Link | Target |
+|---|---|
+| `CLAUDE.md` | `AGENTS.md` |
+| `.claude/skills` | `../.agents/skills` |
+
+```bash
+readlink CLAUDE.md          # AGENTS.md
+readlink .claude/skills     # ../.agents/skills
+ls .claude/skills/setup/SKILL.md
+```
+
+The check passes when both links resolve. If one is missing or is a plain file (a clone on
+Windows without symlink support, `git config core.symlinks` false), recreate it yourself with
+`ln -sfn AGENTS.md CLAUDE.md` or `ln -sfn ../.agents/skills .claude/skills`, then tell the user
+to restart Claude Code so the skills load. On Windows, point them to enabling Developer Mode
+and `git config core.symlinks true` before re-cloning.
+
+## 6. Connectors
 
 Check what this Claude Code session can reach:
 
@@ -109,7 +132,7 @@ select it (for example **claude.ai Miro**) and log in in the browser.
 Gmail is only needed by the PO, and Miro only by whoever prepares the retro. For anyone else,
 report a missing Gmail or Miro as "not needed", not as a failure.
 
-## 6. Report
+## 7. Report
 
 End with one table, one row per check, and nothing else changed:
 
@@ -122,6 +145,7 @@ End with one table, one row per check, and nothing else changed:
 | Project access | ✅ Tulip Churn Board | — |
 | uv sync | ✅ | — |
 | Wiki clone | ✅ `../tulip-churn.wiki` | — |
+| Agent links | ✅ `CLAUDE.md`, `.claude/skills` | — |
 | Slack | ✅ | — |
 | Miro (optional) | ✅ | — |
 | Gmail (optional) | — not needed | — |
