@@ -87,6 +87,7 @@ claude mcp list
 | Slack | team chat (workspace AgileOrchestrators) | a `claude.ai Slack` line shows `✔ Connected` |
 | Miro (optional) | retro boards (`sprint-retrospective` skill) | a `claude.ai Miro` line shows `✔ Connected` |
 | Gmail (optional) | the PO's personal tools only | a `claude.ai Gmail` line shows `✔ Connected` |
+| Slack bot (optional) | posting as **Tulip Churn Bot** (`slack` server in `.mcp.json`) | a `slack` line shows `✔ Connected` |
 
 Also list every server in `.mcp.json` with its status from `claude mcp list`, so this report
 stays in sync with the repo config.
@@ -102,6 +103,18 @@ For a missing Gmail, Slack or Miro connector, give these steps:
    the company mailbox; for Slack first accept the invite to the AgileOrchestrators workspace
    (ask the PO if there is none in the mailbox).
 3. Restart Claude Code, then run `/setup` again.
+
+The `slack` server in `.mcp.json` reads the bot token from the `SLACK_BOT_TOKEN` environment
+variable. Claude Code does not read `.env`, so an empty variable shows up as `invalid_auth` on
+every Slack call. If the user wants the bot, tell them to:
+
+1. Get the bot token (`xoxb-…`) from the PO and put `SLACK_BOT_TOKEN=xoxb-…` in `.env` in the
+   repo root (gitignored). Never paste it into this chat.
+2. Quit Claude Code and start it again with the variable exported:
+   `set -a; source .env; set +a; claude --continue`.
+
+Check with `mcp__slack__slack_list_channels`: it passes when it returns `"ok": true`. The bot only
+reads and posts in channels it was invited to (`/invite @Tulip Churn Bot`).
 
 A connector that is listed but needs authentication is fixed in this session: run `/mcp`,
 select it (for example **claude.ai Miro**) and log in in the browser.
@@ -125,6 +138,7 @@ End with one table, one row per check, and nothing else changed:
 | Slack | ✅ | — |
 | Miro (optional) | ✅ | — |
 | Gmail (optional) | — not needed | — |
+| Slack bot (optional) | — not needed | — |
 
 Then one line: "All set" when every required check is ✅, otherwise the number of open
 actions and the first one to do. Point the user to `README.md` (Quickstart) and `CLAUDE.md`

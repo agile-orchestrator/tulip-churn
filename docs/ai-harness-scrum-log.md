@@ -145,3 +145,32 @@ operation: what was asked, what the harness did, which connectors, and what was 
   opened PR #51 from the template (no issue: team tooling under #28) and requested AdamAlansary
   as reviewer, the only other collaborator who committed to the touched paths. Lint and tests
   green. *Connectors:* gh CLI.
+
+### Project setup — Slack MCP server
+- Added a project-level Slack MCP server (`@modelcontextprotocol/server-slack`) to `.mcp.json`,
+  with the bot token read from `${SLACK_BOT_TOKEN}` (kept in the gitignored `.env`).
+  *Connectors:* Slack.
+- *Miss:* the first call failed with `invalid_auth`: Claude Code does not read `.env`, so the
+  variable was empty. Lesson: export `.env` into the shell before starting Claude Code. After a
+  restart the bot listed the workspace channels; it is a member of #tulip-churn and #tasks.
+- The PO asked for a test DM: Claude looked up the PO's Slack user ID and posted to it; the bot
+  opened a DM channel on its own, so `chat:write` alone is enough for DMs. *Connectors:* Slack.
+- **Commit and PR.** Claude moved the local changes onto `chore/slack-mcp` from `origin/main`
+  (the local `main` was 4 commits behind; the log conflicted and both sides were kept), made the
+  bot an optional check in `/setup`, opened PR #52 and requested theunis as reviewer. The PR
+  flags that the per-user `claude.ai Slack` connector already exists and the bot needs a shared
+  token. *Connectors:* gh CLI.
+- **Issue for the PR.** The PO asked for a linked issue or a new one plus a skill. Nothing
+  under #28 covered Slack, and the existing `create-pbi` skill already fits, so no new skill.
+  Claude drafted the PBI, the PO approved, and it created #53 (Task, sub-issue of #28) and
+  set `Closes #53` on PR #52. *Connectors:* gh CLI.
+- *Miss:* the board fields were not set at first because the `gh` token lacked the `project`
+  scope. `! gh auth refresh -s project` fails without a TTY (it asks for `-h github.com` and
+  then waits for the browser), so the PO ran it in a separate terminal. After that Claude
+  added #53 to the board: In review, P2, 2 points. *Connectors:* gh CLI.
+- *Lesson:* the GraphQL `closingIssuesReferences` of PR #52 stayed empty after adding
+  `Closes #53`, and it is empty for older PRs too, yet `Closes #24` in PR #40 did close #24 on
+  merge. That field is no proof of the link here; the issue timeline is.
+- **Review ping.** The PO asked to ping the reviewer on Slack if the review was still pending:
+  Claude checked PR #52 (no review yet) and sent Theun a DM from Tulip Churn Bot with the
+  link and the open question. *Connectors:* gh CLI, Slack.
