@@ -145,3 +145,99 @@ operation: what was asked, what the harness did, which connectors, and what was 
   opened PR #51 from the template (no issue: team tooling under #28) and requested AdamAlansary
   as reviewer, the only other collaborator who committed to the touched paths. Lint and tests
   green. *Connectors:* gh CLI.
+
+### Picking up a PBI — #11 "Improve model"
+- The PO asked to take the PBI about improving the model: Claude assigned #11 to them
+  (`gh api .../assignees`). *Connectors:* gh CLI.
+- *Miss flagged:* #11 is still a one-liner with `needs-refinement` ("maybe try xgboost") and
+  overlaps #12 (compare candidate models), so it does not meet the Definition of Ready yet.
+- **slopguard setup for #11.** The PO wanted the `python-slopguard` Stop hook before starting.
+  Claude installed it as a dev dependency, walked through every setting one at a time with
+  examples measured on this repo (ruff, vulture, PMD), and applied the PO's choices: complexity 4,
+  15 statements, return tuples of 2, 3 types per hint, `existing_violations = "block"`,
+  PMD required. It installed PMD locally and added a type-hint rule to `AGENTS.md`. Committed on
+  `feat/11-improve-model`, not `main`, at the PO's request. *Connectors:* gh CLI.
+- *Lesson:* testing a claim beats explaining it. Claude's copy-paste example was wrong: PMD
+  only matches exact copies, even with `--ignore-identifiers`. The PO spotted it, and Claude
+  opened kimzed/python-slopguard#1.
+- *Miss:* `on_missing_tool = "error"` blocked Claude's own next Stop before PMD was installed,
+  and the generated `vulture_whitelist.py` broke `ruff check` until it was excluded.
+- **Finding logged and fixed.** `data.TARGET` was unused while `"Exited"` was hard-coded in 6
+  places. Following `log-finding`, Claude created #55 (PBI, `data`, P3, parent #3), fixed it on
+  `chore/55-use-target-constant` and opened PR #56 with theunis as reviewer (last committer to
+  `data.py` and the tests); #55 is In review with no sprint. *Connectors:* gh CLI.
+
+### Working on #11 while the PO was away
+- **Asked:** "work on the model improvement (current branch), log slopguard feedback, see you
+  for the PR". Claude planned first (plan mode). #11 did not meet the Definition of Ready and
+  duplicated #12. Training lives in the notebook, and #10's PR #47 is still open. The PO
+  approved the plan. *Connectors:* gh CLI, wiki (git).
+- **Refinement by the harness.** Claude rewrote #11 as "Compare candidate churn models and pick
+  the best ranker": story, 4 Given/When/Then criteria, named metric (precision in the top 10%,
+  because Retention calls the top ~500 each week), 5 SP, Sprint 3, In progress. It removed
+  `needs-refinement` and closed #12 as a duplicate. #11 was already a sub-issue of #3.
+  *Connectors:* gh CLI (issues API, Projects).
+- **Result: no model change.** `tulip_churn.compare` runs 5 candidates on the same folds.
+  Gradient boosting (current) 0.801 AUC / 0.611 top-10% precision, XGBoost 0.799 / 0.603,
+  logistic regression 0.757. The synthetic data comes from a known formula, whose own score is
+  0.810 / 0.628. So the current model is within about 1 point of the best any model can do.
+  ADR-002 (wiki) keeps gradient boosting. Better results need new signal (#36), not a new
+  algorithm.
+- *Lesson:* "try XGBoost" was answered with a ceiling measurement instead of a model swap. An
+  improvement ticket should name the metric *and* check how much room is left before it is
+  estimated.
+- *Miss:* `xgboost` pulled a ~300 MB CUDA wheel (`nvidia-nccl`) on Linux. Claude switched to
+  `xgboost-cpu`, then made it a dev dependency, because XGBoost did not win.
+- *Miss:* the documented wiki push (`git push origin master`) failed: the wiki is cloned over
+  HTTPS and the gh CLI is set to SSH. It worked with
+  `git -c credential.helper='!gh auth git-credential' push`.
+- **slopguard feedback:** no blocks. `compare.py` was written as 13 small functions from the
+  start (complexity ≤ 4, ≤ 15 statements, ≤ 4 args, settings in a `CompareConfig` dataclass),
+  and a manual `slopguard hook stop` returned clean. The only lint hit was a ruff E501 (line
+  length) on one signature. *Observation:* slopguard did not flag the untyped fixtures in
+  `tests/conftest.py`, although the project rule wants type hints in `tests/`.
+- **PR.** Opened via `/review-publish-pr` with theunis as reviewer (author of #47 and assignee
+  of #10, where the chosen model gets wired into `train.py`). #11 moved to In review.
+  *Connectors:* gh CLI.
+- **Findings logged (`log-finding`).** #59 "Enforce type hints with ruff ANN rules" (PBI, P3,
+  Backlog + `needs-refinement`): `ruff --select ANN` finds 33 missing hints. Too big for the
+  fast path, and enabling a lint rule is a team decision. The broken wiki-push instruction was
+  fixed in the repo: PR #60 (`chore/wiki-push-credentials`, `/setup` runs `gh auth setup-git`),
+  with AdamAlansary as reviewer. *Connectors:* gh CLI (issues, Projects).
+- **Correction: slopguard never ran on the #11 code.** The PO asked why it did not fire.
+  Reading its source showed that the Stop hook only checks files `git status` shows as changed.
+  Claude had committed `compare.py` during the turn, so at Stop the tree was clean and the hook
+  let everything through without checking. "No blocks" above meant *not checked*, not *clean*.
+  The code met the limits only because Claude had read `[tool.slopguard]` and run the hook by
+  hand before committing.
+- *Lesson:* a guard built for "Claude edits, the human commits" is silently off when the agent
+  commits on its own, which is exactly what `work-on-pbi` and `log-finding` do. A green check
+  with nothing checked looks like a pass.
+- **Fix.** A `PreToolUse` hook (`.claude/hooks/slopguard-on-commit.sh`) runs the slopguard
+  checks before every `git commit` Claude makes, and exit 2 blocks the commit. Tested with a
+  probe file: it blocks a 9-branch, 5-argument function, and it lets clean commits and other git
+  commands through. Upstream issue opened on kimzed/python-slopguard.
+- **Reset for a rerun.** At the PO's request the #11 code was taken off the branch (the
+  comparison module, tests, report and xgboost dependency) and the branch was force-pushed.
+  PR #58 was closed, and #11 went back to In progress so the PO can rerun the task with the new
+  hook.
+
+### #11 rerun — with the slopguard commit hook active
+- Rebuilt `compare.py`, `tests/test_compare.py` and `reports/model_comparison.md` from scratch
+  on `feat/11-improve-model`, this time with the `PreToolUse` `git commit` hook live. Two
+  commits (`ed388d4`, `8621bb5`); **slopguard did not block either one**, this time because it
+  genuinely ran (verified: the hook's `jq` payload strips `stop_hook_active` and it fires on
+  every commit, not just at Stop). *Connectors:* gh CLI, git.
+- **Reproducibility gap found during the rerun, not a slopguard finding.** `GradientBoostingClassifier`
+  and `XGBClassifier` had no `random_state`, so results drifted run to run. Two runs of the new
+  module gave XGBoost 0.799 ROC AUC once and 0.762 the next — a 0.037 swing, close to the 0.05
+  leakage-investigation threshold the PBI itself sets. Seeded both estimators; the report is now
+  stable across runs. The pick (gradient boosting) does not change either way.
+  *Lesson:* an unseeded non-deterministic model is a correctness bug a lint/complexity guard
+  like slopguard cannot see — worth a manual re-run check, not just one green run, before trusting
+  a comparison's numbers.
+- **Wiki.** ADR-002 refreshed with the reproducible numbers and moved from "Proposed" to
+  "Accepted", pushed directly to `tulip-churn.wiki` (`gh auth setup-git` was needed again to
+  push over https). *Connectors:* git / gh CLI.
+- **PR.** Opened PR #61 (replaces the closed #58) with theunis as reviewer, same rationale as
+  before. #11 moved to In review. *Connectors:* gh CLI (Projects).
