@@ -162,3 +162,7 @@ operation: what was asked, what the harness did, which connectors, and what was 
   opened kimzed/python-slopguard#1.
 - *Miss:* `on_missing_tool = "error"` blocked Claude's own next Stop before PMD was installed,
   and the generated `vulture_whitelist.py` broke `ruff check` until it was excluded.
+- **Finding logged and fixed.** `data.TARGET` was unused while `"Exited"` was hard-coded in 6
+  places. Following `log-finding`, Claude created #55 (PBI, `data`, P3, parent #3), fixed it on
+  `chore/55-use-target-constant` and opened PR #56 with theunis as reviewer (last committer to
+  `data.py` and the tests); #55 is In review with no sprint. *Connectors:* gh CLI.
