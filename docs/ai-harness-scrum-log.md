@@ -151,6 +151,6 @@ operation: what was asked, what the harness did, which connectors, and what was 
   `docs/slack-mcp-setup.md`, leaving out the workspace invite link and the OAuth client-secret
   sections that did not match the bot-token setup, and opened it on its own branch from
   `origin/main`, referencing #53 and PR #52. *Connectors:* gh CLI.
-- The PO opened PR #54 and asked Claude to ping the reviewer. Claude replied in the existing
+- Claude opened PR #54 (reviewer theunis); the PO asked it to ping him too. Claude replied in the existing
   Slack DM thread with Theun, so both review requests stay in one place, and deleted the local
   notes that the guide replaces. *Connectors:* gh CLI, Slack.
