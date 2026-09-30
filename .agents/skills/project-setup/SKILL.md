@@ -1,6 +1,6 @@
 ---
 name: project-setup
-description: Change how the Tulip Churn project is set up, such as board columns and fields, labels, the workflow skills and CLAUDE.md, and keep them consistent. Use when asked to add, rename or remove a board status or field, fix board items with missing fields, or change the scrum workflow or the rules for branches and pushing.
+description: Change how the Tulip Churn project is set up, such as board columns and fields, labels, workflow skills, and AGENTS.md, and keep them consistent. Use when asked to add, rename or remove a board status or field, fix board items with missing fields, or change the scrum workflow or the rules for branches and pushing.
 argument-hint: <setup change, e.g. "add an In refinement status">
 ---
 
@@ -73,12 +73,11 @@ user for estimates and priorities instead of guessing them.
 After a setup change, search for the old names and defaults and update each match:
 
 ```bash
-grep -rn "<old name or default>" CLAUDE.md .claude/ .github/
+grep -rn "<old name or default>" AGENTS.md .agents/ .github/
 ```
 
-- `CLAUDE.md`: board columns, defaults, and the rules for writing PBIs
-- `.claude/skills/*/SKILL.md`, such as `create-pbi`, which sets the default Status
-- `.claude/commands/*.md`, such as `transcript-to-board` and `refine-pbi`
+- `AGENTS.md`: board columns, defaults, and the rules for writing PBIs
+- `.agents/skills/*/SKILL.md`, such as `create-pbi`, which sets the default Status
 - `.github/ISSUE_TEMPLATE/`, for labels and type
 - the wiki DoR and DoD pages, if the change affects them, in the local clone
   `../tulip-churn.wiki` (pull first). Propose the edit and do not push to the wiki without

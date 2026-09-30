@@ -1,12 +1,21 @@
 ---
 name: refinement-session
-description: Run a backlog refinement session on the Tulip Churn board - list the items In refinement, check them one by one against the Definition of Ready, apply the agreed changes and move them to Ready. Use when asked to run, start or continue a refinement session, or to refine the items in refinement.
+description: Run a backlog refinement session or assess one Tulip Churn PBI against the Definition of Ready, propose improvements, and apply agreed changes. Use when asked to run refinement or refine a specific PBI.
 argument-hint: "[issue number to start with]"
 ---
 
 Walk the team through the items in **In refinement**, one at a time. The user (usually the
 Product Owner) decides; you check, propose and apply. Never edit, create or move an issue
 without the user's OK for that change.
+
+## Single-PBI refinement
+
+When `$ARGUMENTS` identifies an issue, refine that item without listing the whole column:
+read its body, parent, comments, board fields, and the Definition of Ready, then begin at
+step 3. State whether it meets the In-refinement entry bar in `AGENTS.md`; if it does not,
+say which points are missing and propose keeping it in Backlog with `needs-refinement`.
+If it is vague or too large, propose smaller PBIs with user stories and Given/When/Then
+acceptance criteria. Do not edit or create issues without the user's OK.
 
 ## 1. List the items
 

@@ -16,7 +16,7 @@ its own PR with a reviewer (step 5). Then go back to the current task.
 | Inside the scope of the item you are working on | Fix it in the current branch; no new item |
 | Code, data, model, CI or docs problem outside that scope | **Bug** or **PBI** (this skill) |
 | Board state is wrong (status, labels, Sprint field, missing type or parent) | Do not create an issue. List it in your report and offer to fix it |
-| A command, skill or instruction in this repo is wrong or out of date | Fix the instruction (`CLAUDE.md`, `.claude/skills/`, `.claude/commands/`) on a `chore/` branch |
+| A command, skill or instruction in this repo is wrong or out of date | Fix the instruction (`AGENTS.md` or `.agents/skills/`) on a `chore/` branch |
 | Your own mistake in this session (wrong branch base, bad commit) | Fix it and mention it; no item |
 
 **Bug** when something is broken or gives wrong results (a crash, wrong numbers, a leak,
@@ -92,7 +92,7 @@ Fix it yourself, without asking, when **all** of these hold:
 - No dependency changes at all (adding, removing or swapping packages, dev ones included): new
   third-party code needs a human decision, and Claude Code's permission check blocks it anyway
 - None of these are touched: `.github/workflows/`, secrets or credentials (`.env`, tokens,
-  keys), deploy or infra config, `.mcp.json`, `.claude/settings*.json`
+  keys), deploy or infra config, `.mcp.json`, `.agents/settings*.json`
 
 Otherwise leave the item in Backlog for the team.
 
