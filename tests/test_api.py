@@ -50,3 +50,9 @@ def test_score_returns_probability(client):
     body = client.post("/score", json=CUSTOMER).json()
     assert 0.0 <= body["churn_probability"] <= 1.0
     assert isinstance(body["at_risk"], bool)
+
+
+def test_score_is_logged(client, caplog):
+    with caplog.at_level("INFO", logger="tulip_churn.audit"):
+        client.post("/score", json=CUSTOMER)
+    assert "churn_probability" in caplog.text
