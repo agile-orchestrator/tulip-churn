@@ -48,7 +48,7 @@ pythonpath = ["src"]
 slopguard = { git = "https://github.com/kimzed/python-slopguard" }
 
 [tool.slopguard]
-exclude = ["notebooks/*"]
+exclude = ["notebooks/*", ".agents/skills/*"]
 allow_suppression_comments = false
 max_findings = 10
 on_missing_tool = "error"

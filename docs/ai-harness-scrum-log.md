@@ -241,3 +241,21 @@ operation: what was asked, what the harness did, which connectors, and what was 
   push over https). *Connectors:* git / gh CLI.
 - **PR.** Opened PR #61 (replaces the closed #58) with theunis as reviewer, same rationale as
   before. #11 moved to In review. *Connectors:* gh CLI (Projects).
+
+## 2026-10-01
+
+- **Refinement, #46 (retrain and redeploy the live model).** The PO asked to pick up a backlog
+  item. The harness listed Backlog and In refinement, checked #46 against the DoR and checked
+  its claims: PR #38 had already retrained (AUC 0.795), and there is no deploy target at all (no
+  deploy workflow, environments, releases or registry secrets). The PO had to ask twice ("isn't
+  #38 already handling this?") before the harness said plainly that #46 was redundant. #46 was
+  closed as not planned, with a comment pointing deployment to #15 and the stale notebook
+  outputs to #61. *Connectors:* gh CLI (issues, Projects), wiki clone.
+  *Lesson:* check whether earlier merged work already delivers the item before refining its
+  wording. *Miss:* closed issues (#46, #12) stay in Backlog on the board, because nothing moves
+  them automatically.
+- **Showcase images.** The PO asked for screenshots of the session. The harness can't capture
+  its own terminal, so it recreated four moments as terminal-style PNGs: HTML rendered with
+  headless Chrome and saved to `~/Downloads/refinement-session/`. Two of them (the #46 DoR check
+  and the PO pushback that closed #46) went to theunis by Slack DM, marked as recreations.
+  *Connectors:* Slack (file upload). *Lesson:* label recreated visuals as recreations.
