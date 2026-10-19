@@ -49,6 +49,8 @@ uv run ruff check .
 ## Code conventions
 
 - Python 3.11+, src layout, `ruff` for lint (line length 100).
+- Type hints on every function in the project (`src/`, `tests/`, `scripts/`): all parameters
+  and the return type, `-> None` included.
 - Feature logic goes in `features.py` and must work at scoring time, when the target is unknown.
 - Every behaviour change comes with a test in `tests/`.
 
